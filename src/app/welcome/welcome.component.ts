@@ -14,7 +14,7 @@ export class WelcomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    localforage.getItem("jwt")
+    localforage.getItem("jwt-token")
     .then((response: any) => {
       if(response == null){
         this.show_login = "yes";
