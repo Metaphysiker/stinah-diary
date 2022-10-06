@@ -11,6 +11,8 @@ export class WelcomeComponent implements OnInit {
 
   show_login: String = "unclear";
 
+  secret_message: String = "nothing";
+
   constructor() { }
 
   ngOnInit(): void {
@@ -24,6 +26,23 @@ export class WelcomeComponent implements OnInit {
         this.show_login = "no";
       }
     });
+
+    localforage.getItem("jwt-token")
+    .then((jwt_token: any) => {
+      fetch('/user/profile', {
+        headers: {
+          'Authorization': 'JWT ' + jwt_token
+        }
+      })
+      .then((response: any) => {
+        console.log(response);
+        console.log(response.json());
+      })
+     })
+
+
+
+
   }
 
 }
