@@ -28,11 +28,14 @@ passport.use(
       passwordField: 'password'
     },
     async (email, password, done) => {
+      console.log("signup");
       try {
+        console.log("try");
         const user = await UserModel.create({ email, password });
 
         return done(null, user);
       } catch (error) {
+        console.log("catch");
         done(error);
       }
     }

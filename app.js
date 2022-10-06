@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 
 const UserModel = require('./model/model');
 
-mongoose.connect('mongodb://127.0.0.1:27017/passport-jwt');
+mongoose.connect('mongodb://127.0.0.1:27017/stinah-diary');
 mongoose.connection.on('error', error => console.log(error) );
 mongoose.Promise = global.Promise;
 
