@@ -1,5 +1,5 @@
 <div class="container my-3 border rounded p-2">
-  <h1>Login</h1>
+  <h1>Bitte einloggen</h1>
   <div class="mb-3">
     <label for="email" class="form-label">e-Mail</label>
     <input type="email" class="form-control" [formControl]="email" placeholder="name@example.com">
@@ -9,10 +9,14 @@
     <label for="password" class="form-label">Passwort</label>
 
     <div class="">
-      <input type="password" class="form-control" [formControl]="email">
+      <input type="password" class="form-control" [formControl]="password">
     </div>
   </div>
 
   <button (click)="login()" class="btn btn-primary">einloggen</button>
+
+  <p>
+    {{login_status}}
+  </p>
 
 </div>

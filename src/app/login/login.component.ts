@@ -4,6 +4,7 @@ import { LocalforageService } from '../localforage.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+declare const localforage: any;
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,6 +22,8 @@ export class LoginComponent implements OnInit {
   email = new FormControl('');
   password = new FormControl('');
 
+  login_status: String = "Nicht angemeldet."
+
   constructor(
     private localforageService: LocalforageService,
     private http: HttpClient) { }
@@ -30,33 +33,41 @@ export class LoginComponent implements OnInit {
 
   login(){
 
+    var body_email = "empty";
+    var body_password = "empty";
+
+    if(this.email.value != null){
+      body_email = this.email.value;
+    }
+
+    if(this.password.value != null){
+      body_password = this.password.value;
+    }
+
+    console.log(body_email);
+    console.log(body_password);
+
     let body = new URLSearchParams();
-    body.set('email', "username");
-    body.set('password', "password");
+    body.set('email', body_email);
+    body.set('password', body_password);
 
+    console.log("body: ");
+    console.log(body);
 
-    //const data = { email: 'fmyxemail@me.com1', password: "password123" };
-
-fetch('/signup', {
-  method: 'POST', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  },
-  body: body,
-})
-  .then((response) => response.json())
-  .then((data) => {
-    console.log('Success:', data);
-  })
-  .catch((error) => {
-    console.log(error);
-    console.error('Error:');
-  });
-
-
-  //  this.addHero({ "email": 'example2@example.com', "password": 'password' }).subscribe((response: any) => {
-  //    console.log(response);
-  //  });
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: body,
+    })
+    .then((response) => {
+      if(response.ok){
+        this.login_status = "Anmeldung war erfolgreich.";
+      } else {
+        this.login_status = "Falsche Zugangsdaten oder Fehler.";
+      }
+    })
 
   }
 
