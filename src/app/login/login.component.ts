@@ -63,12 +63,32 @@ export class LoginComponent implements OnInit {
     })
     .then((response) => {
       if(response.ok){
-        this.login_status = "Anmeldung war erfolgreich.";
+
+        response.json()
+        .then((data) => {
+          console.log(data);
+          console.log(data.token);
+          localforage.setItem("jwt-token", data.token)
+            .then((jwt_token: any) => {
+              this.login_status = "Anmeldung war erfolgreich."
+            })
+        })
+
+
       } else {
         this.login_status = "Falsche Zugangsdaten oder Fehler.";
       }
     })
 
+  }
+
+  loginAttempt(hero: any): Observable<any> {
+    let url = "http://localhost:3000/signup";
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+    };
+
+    return this.http.post<any>(url, hero, httpOptions);
   }
 
   addHero(hero: any): Observable<any> {

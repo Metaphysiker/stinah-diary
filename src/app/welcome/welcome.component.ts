@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalforageService } from '../localforage.service';
+declare const localforage: any;
 
 @Component({
   selector: 'app-welcome',
@@ -8,14 +9,21 @@ import { LocalforageService } from '../localforage.service';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private localforageService: LocalforageService) { }
+  show_login: String = "unclear";
+
+  constructor() { }
 
   ngOnInit(): void {
-    this.localforageService.getItem("test")
-      .then((response: any) => {
-        console.log(response);
-      })
-
+    localforage.getItem("jwt")
+    .then((response: any) => {
+      if(response == null){
+        this.show_login = "yes";
+      } else if (response.length === 0){
+        this.show_login = "yes";
+      } else {
+        this.show_login = "no";
+      }
+    });
   }
 
 }

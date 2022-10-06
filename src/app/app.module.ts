@@ -8,13 +8,17 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { AnimalsOverviewComponent } from './animals-overview/animals-overview.component';
+import { DebuggerComponent } from './debugger/debugger.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    AnimalsOverviewComponent,
+    DebuggerComponent
   ],
   imports: [
     BrowserModule,

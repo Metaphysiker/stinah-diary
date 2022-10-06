@@ -1,3 +1,16 @@
 <div class="container">
+  <p>
+    show_login: {{show_login}}
+  </p>
+  <div *ngIf="show_login== 'yes'; else loggedIn">
+    <app-login></app-login>
+  </div>
+
+  <ng-template #loggedIn>
+    <p>
+      Angemeldet!
+    </p>
+  </ng-template>
+
 <p>welcome works!</p>
 </div>
