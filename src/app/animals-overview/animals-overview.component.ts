@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AnimalsService } from '../animals.service';
 
 @Component({
   selector: 'app-animals-overview',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnimalsOverviewComponent implements OnInit {
 
-  constructor() { }
+  animals: any = "";
+
+  constructor(private animalService: AnimalsService) { }
 
   ngOnInit(): void {
+    //this.animalService.getAnimals().subscribe((animals: any) => {this.animals = animals});
+
+    this.animalService.getAnimals().then((animals: any) => {
+      console.log("getAnimals");
+      console.log(animals);
+      console.log(animals["animals"]);
+      this.animals = animals["animals"];
+    });
+
+
   }
 
 

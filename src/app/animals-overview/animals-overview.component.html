@@ -1,5 +1,11 @@
 <div class="container">
 
+  {{animals}}
+
+  <div *ngFor="let animal of animals">
+    {{animal.name}}
+  </div>
+
 <table class="table">
   <thead>
     <tr>

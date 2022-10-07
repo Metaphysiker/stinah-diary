@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const AnimalModel = require('../model/animal');
 
 router.get(
   '/animals',
-  (req, res, next) => {
+  async (req, res, next) => {
+
+    const filter = {};
+    const animals = await AnimalModel.find(filter);
+
     res.json({
-      message: 'You made it to the secure route',
-      user: req.user,
-      token: req.query.secret_token
+      animals: animals
     })
   }
 );
