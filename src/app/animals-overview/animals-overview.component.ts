@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AnimalsService } from '../animals.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { AnimalsService } from '../animals.service';
 import { Animal } from '../animal';
 
 @Component({
@@ -23,6 +23,7 @@ export class AnimalsOverviewComponent implements OnInit {
     //this.animalService.getAnimals().subscribe((animals: any) => {this.animals = animals});
 
     this.animalService.getAnimals().then((response: any) => {
+
       this.animals = response;
     });
 
@@ -32,6 +33,9 @@ export class AnimalsOverviewComponent implements OnInit {
     //  console.log(response.name);
     //});
   }
+
+  isDate(obj: any): boolean { return obj instanceof Date; }
+
 
 
 }

@@ -1,19 +1,8 @@
-<div class="container">
-  <p>
-    secret_message: {{secret_message}}
-  </p>
-  <p>
-    show_login: {{show_login}}
-  </p>
-  <div *ngIf="show_login== 'yes'; else loggedIn">
-    <app-login></app-login>
-  </div>
 
-  <ng-template #loggedIn>
-    <p>
-      Angemeldet!
-    </p>
+  <ng-template [ngIf]="show_login == 'yes'" [ngIfElse]="loggedIn">
+      <app-login></app-login>
   </ng-template>
 
-<p>welcome works!</p>
-</div>
+  <ng-template #loggedIn>
+    <app-animals-overview></app-animals-overview>
+  </ng-template>

@@ -10,13 +10,12 @@
   <tbody>
     <tr *ngFor="let animal of animals">
       <td>
-        {{animal.name}}
+        <button routerLink="/animal/{{animal._id}}" class="btn btn-primary">{{animal.name}}</button>
       </td>
       <td>
-        {{animal.updatedAt}}
-      </td>
-      <td>
-        <button routerLink="/animal/{{animal._id}}" class="btn btn-primary">View</button>
+        <ng-template [ngIf]="animal.updatedAt !== undefined">
+            {{animal.updatedAt.toLocaleDateString("de")}}
+        </ng-template>
       </td>
     </tr>
   </tbody>

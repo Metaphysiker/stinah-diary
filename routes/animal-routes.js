@@ -7,7 +7,7 @@ router.get(
   async (req, res, next) => {
 
     const filter = {};
-    const animals = await AnimalModel.find(filter);
+    const animals = await AnimalModel.find(filter).sort({'updatedAt': -1});
 
     res.json(animals)
   }

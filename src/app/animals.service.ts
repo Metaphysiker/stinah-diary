@@ -14,9 +14,7 @@ export class AnimalsService {
 
   getAnimal(id: Number){
     return new Promise(function(final_resolve, final_reject){
-      console.log("get animal id: ");
-      console.log(id);
-      console.log('/secure/animals/' + id);
+
       localforage.getItem("jwt-token")
       .then((jwt_token: any) => {
 
@@ -47,6 +45,12 @@ export class AnimalsService {
         })
         .then((response) => response.json())
         .then((data: any) => {
+
+          for (let i = 0; i < data.length; i++) {
+            data[i].updatedAt = new Date(data[i].updatedAt);
+            data[i].createdAt = new Date(data[i].createdAt);
+          }
+
           final_resolve(data);
         });
       })

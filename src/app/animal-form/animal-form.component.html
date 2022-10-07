@@ -1,14 +1,18 @@
 <div class="container">
 
-  <div class="border rounded p-2">
+  <div class="border rounded p-2 my-2">
+
+    <h2>Neues Tier eintragen</h2>
 
     <form [formGroup]="animalForm" (ngSubmit)="onSubmit()">
 
-      <label for="name">Name: </label>
-      <input id="name" type="text" formControlName="name">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" formControlName="name" class="form-control" id="name" aria-describedby="name">
+      </div>
 
-      <p>Complete the form to enable button.</p>
-    <button type="submit" [disabled]="!animalForm.valid">Submit</button>
+
+      <button type="submit" [disabled]="!animalForm.valid" class="btn btn-primary">Eintragen</button>
     </form>
 
   </div>
