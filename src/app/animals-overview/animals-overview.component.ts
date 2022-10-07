@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AnimalsService } from '../animals.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-animals-overview',
@@ -8,20 +11,30 @@ import { AnimalsService } from '../animals.service';
 })
 export class AnimalsOverviewComponent implements OnInit {
 
+  //animals$: Observable<any>;
+  selectedId: any;
+
   animals: any = "";
 
-  constructor(private animalService: AnimalsService) { }
+  constructor(
+    private animalService: AnimalsService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     //this.animalService.getAnimals().subscribe((animals: any) => {this.animals = animals});
 
     this.animalService.getAnimals().then((response: any) => {
-      this.animals = response["animals"];
+      this.animals = response;
+      this.selectedId = this.animals[0].id;
     });
 
-
+    //this.animalService.createAnimal("Heinrich").then((response: any) => {
+    //  console.log("create Animal: ");
+    //  console.log(response);
+    //  console.log(response.name);
+    //});
   }
-
 
 
 }

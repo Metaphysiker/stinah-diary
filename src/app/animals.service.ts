@@ -27,16 +27,39 @@ export class AnimalsService {
           headers: {
             'Authorization': 'JWT ' +jwt_token
           }
-        }).then((response: any) => {
-          console.log(response);
-          final_resolve(response.json());
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+          final_resolve(data);
         });
       })
     })
   }
 
-  createAnimal(){
+  createAnimal(name: any){
+    return new Promise(function(final_resolve, final_reject){
 
+      console.log("createAnimal start");
+
+      let body = new URLSearchParams();
+      body.set('name', name);
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/animals', {
+          method: "POST",
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          },
+          body: body,
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            final_resolve(data);
+        });
+      })
+    })
   }
 
 

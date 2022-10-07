@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: '', component: WelcomeComponent },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'animal', component: AnimalComponent },
+  { path: 'animal/:id', component: AnimalComponent },
   { path: 'animals-overview', component: AnimalsOverviewComponent },
 ];
 
