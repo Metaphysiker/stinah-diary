@@ -14,7 +14,7 @@ export class AnimalComponent implements OnInit {
   //animal$: Observable<any>;
   animal_id: any;
   animal: Animal = {
-    name: "Platzhalter",
+    name: "",
     _id: 0
   }
 

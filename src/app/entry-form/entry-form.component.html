@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="border rounded p-2 my-2">
+    <h2>Neuer Eintrag</h2>
+    <form [formGroup]="entryForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="content" class="form-label">Inhalt</label>
+        <input type="text" formControlName="content" class="form-control" id="content" aria-describedby="content">
+      </div>
+      <button type="submit" [disabled]="!entryForm.valid" class="btn btn-primary">eintragen</button>
+    </form>
+  </div>
+</div>
