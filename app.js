@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 
 const UserModel = require('./model/user');
 const AnimalModel = require('./model/animal');
+const EntryModel = require('./model/entry');
 
 mongoose.connect('mongodb://127.0.0.1:27017/stinah-diary');
 mongoose.connection.on('error', error => console.log(error) );
@@ -19,6 +20,7 @@ require('./auth/auth');
 const routes = require('./routes/routes');
 const secureRoute = require('./routes/secure-routes');
 const animalRoute = require('./routes/animal-routes');
+const entryRoute = require('./routes/entry-routes');
 
 const app = express();
 
@@ -35,6 +37,8 @@ app.use('/', routes);
 // Plug in the JWT strategy as a middleware so only verified users can access this route.
 app.use('/user', passport.authenticate('jwt', { session: false }), secureRoute);
 app.use('/secure', passport.authenticate('jwt', { session: false }), animalRoute);
+app.use('/secure', passport.authenticate('jwt', { session: false }), entryRoute);
+
 
 
 // Handle errors.

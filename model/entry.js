@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 
 const Schema = mongoose.Schema;
 
-const AnimalSchema = new Schema({
-  name: {
+const EntrySchema = new Schema({
+  content: {
     type: String,
     required: true
   }
@@ -14,6 +14,6 @@ const AnimalSchema = new Schema({
 }
 );
 
-const AnimalModel = mongoose.model('animal', AnimalSchema);
+const EntryModel = mongoose.model('entry', EntrySchema);
 
-module.exports = AnimalModel;
+module.exports = EntryModel;
