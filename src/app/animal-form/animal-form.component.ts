@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl  } from '@angular/forms';
 import { AnimalsService } from '../animals.service';
 import { Animal } from '../animal';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-animal-form',
@@ -14,7 +16,8 @@ export class AnimalFormComponent implements OnInit {
     });
 
   constructor(
-    private animalService: AnimalsService
+    private animalService: AnimalsService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -25,7 +28,7 @@ export class AnimalFormComponent implements OnInit {
     console.warn(this.animalForm.value);
 
   this.animalService.createAnimal(this.animalForm.value.name).then((response: any) => {
-      
+      this.router.navigate(['/animals-overview']);
     });
   }
 

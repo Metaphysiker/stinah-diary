@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { LocalforageService } from '../localforage.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+
 declare const localforage: any;
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
 })
-export class LoginComponent implements OnInit {
+export class SignupComponent implements OnInit {
+
   email = new FormControl('');
   password = new FormControl('');
 
-  login_status: String = "Nicht angemeldet."
+  signup_status: String = "";
 
   constructor(
     private http: HttpClient,
@@ -25,7 +28,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  login(){
+  signup(){
 
     var body_email = "empty";
     var body_password = "empty";
@@ -42,7 +45,7 @@ export class LoginComponent implements OnInit {
     body.set('email', body_email);
     body.set('password', body_password);
 
-    fetch('/login', {
+    fetch('/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -56,14 +59,14 @@ export class LoginComponent implements OnInit {
         .then((data) => {
           localforage.setItem("jwt-token", data.token)
             .then((jwt_token: any) => {
-              this.login_status = "Anmeldung war erfolgreich."
-              this.router.navigate(['/animals-overview']);
+              this.signup_status = "Registrierung war erfolgreich."
+              this.router.navigate(['/']);
             })
         })
 
 
       } else {
-        this.login_status = "Falsche Zugangsdaten oder Fehler.";
+        this.signup_status = "Fehler.";
       }
     })
 

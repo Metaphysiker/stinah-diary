@@ -1,0 +1,22 @@
+<div class="container my-3 border rounded p-2">
+  <h1>Bitte registrieren</h1>
+  <div class="mb-3">
+    <label for="email" class="form-label">e-Mail</label>
+    <input type="email" class="form-control" [formControl]="email" placeholder="name@example.com">
+  </div>
+
+  <div class="mb-3 row">
+    <label for="password" class="form-label">Passwort</label>
+
+    <div class="">
+      <input type="password" class="form-control" [formControl]="password">
+    </div>
+  </div>
+
+  <button (click)="signup()" class="btn btn-primary">registrieren</button>
+
+  <p>
+    {{signup_status}}
+  </p>
+
+</div>

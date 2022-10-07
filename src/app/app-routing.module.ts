@@ -4,7 +4,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { AnimalsOverviewComponent } from './animals-overview/animals-overview.component';
 import { AnimalComponent } from './animal/animal.component';
 import { DebuggerComponent } from './debugger/debugger.component';
-
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'animal', component: AnimalComponent },
   { path: 'animal/:id', component: AnimalComponent },
   { path: 'debugger', component: DebuggerComponent},
+  { path: 'signup', component: SignupComponent },
   { path: 'animals-overview', component: AnimalsOverviewComponent },
 ];
 
