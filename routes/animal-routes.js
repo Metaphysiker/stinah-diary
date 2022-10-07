@@ -13,6 +13,16 @@ router.get(
   }
 );
 
+router.get(
+  '/animals/:id',
+  async (req, res, next) => {
+    const filter = {_id: req.params.id};
+    const animal = await AnimalModel.findOne(filter);
+
+    res.json(animal)
+  }
+);
+
 router.post(
   '/animals',
   async (req, res, next) => {

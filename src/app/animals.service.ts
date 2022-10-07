@@ -13,7 +13,24 @@ export class AnimalsService {
   constructor(private http: HttpClient) { }
 
   getAnimal(id: Number){
+    return new Promise(function(final_resolve, final_reject){
+      console.log("get animal id: ");
+      console.log(id);
+      console.log('/secure/animals/' + id);
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
 
+        fetch('/secure/animals/' + id, {
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+          final_resolve(data);
+        });
+      })
+    })
   }
 
   getAnimals(){

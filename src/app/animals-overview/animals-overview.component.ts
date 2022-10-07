@@ -3,6 +3,7 @@ import { AnimalsService } from '../animals.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { Animal } from '../animal';
 
 @Component({
   selector: 'app-animals-overview',
@@ -11,10 +12,7 @@ import { switchMap } from 'rxjs/operators';
 })
 export class AnimalsOverviewComponent implements OnInit {
 
-  //animals$: Observable<any>;
-  selectedId: any;
-
-  animals: any = "";
+  animals: Animal[] = [];
 
   constructor(
     private animalService: AnimalsService,
@@ -26,7 +24,6 @@ export class AnimalsOverviewComponent implements OnInit {
 
     this.animalService.getAnimals().then((response: any) => {
       this.animals = response;
-      this.selectedId = this.animals[0].id;
     });
 
     //this.animalService.createAnimal("Heinrich").then((response: any) => {
