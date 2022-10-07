@@ -12,6 +12,7 @@ import { AnimalsOverviewComponent } from './animals-overview/animals-overview.co
 import { DebuggerComponent } from './debugger/debugger.component';
 import { AnimalComponent } from './animal/animal.component';
 import { AnimalFormComponent } from './animal-form/animal-form.component';
+import { EntryComponent } from './entry/entry.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AnimalFormComponent } from './animal-form/animal-form.component';
     AnimalsOverviewComponent,
     DebuggerComponent,
     AnimalComponent,
-    AnimalFormComponent
+    AnimalFormComponent,
+    EntryComponent
   ],
   imports: [
     BrowserModule,
