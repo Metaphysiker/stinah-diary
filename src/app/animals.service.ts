@@ -31,16 +31,11 @@ export class AnimalsService {
           console.log(response);
           final_resolve(response.json());
         });
-
-
-
       })
-
-
-
     })
+  }
 
-
+  createAnimal(){
 
   }
 

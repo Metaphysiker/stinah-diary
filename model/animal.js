@@ -7,7 +7,8 @@ const AnimalSchema = new Schema({
   name: {
     type: String,
     required: true
-  }
+  },
+  { timestamps: true }
 });
 
 const AnimalModel = mongoose.model('animal', AnimalSchema);

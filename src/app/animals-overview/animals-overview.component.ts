@@ -15,11 +15,8 @@ export class AnimalsOverviewComponent implements OnInit {
   ngOnInit(): void {
     //this.animalService.getAnimals().subscribe((animals: any) => {this.animals = animals});
 
-    this.animalService.getAnimals().then((animals: any) => {
-      console.log("getAnimals");
-      console.log(animals);
-      console.log(animals["animals"]);
-      this.animals = animals["animals"];
+    this.animalService.getAnimals().then((response: any) => {
+      this.animals = response["animals"];
     });
 
 
