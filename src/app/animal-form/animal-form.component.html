@@ -1,0 +1,16 @@
+<div class="container">
+
+  <div class="border rounded p-2">
+
+    <form [formGroup]="animalForm" (ngSubmit)="onSubmit()">
+
+      <label for="name">Name: </label>
+      <input id="name" type="text" formControlName="name">
+
+      <p>Complete the form to enable button.</p>
+    <button type="submit" [disabled]="!animalForm.valid">Submit</button>
+    </form>
+
+  </div>
+
+</div>

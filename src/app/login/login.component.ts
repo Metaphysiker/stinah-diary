@@ -44,15 +44,9 @@ export class LoginComponent implements OnInit {
       body_password = this.password.value;
     }
 
-    console.log(body_email);
-    console.log(body_password);
-
     let body = new URLSearchParams();
     body.set('email', body_email);
     body.set('password', body_password);
-
-    console.log("body: ");
-    console.log(body);
 
     fetch('/login', {
       method: 'POST',
@@ -66,8 +60,6 @@ export class LoginComponent implements OnInit {
 
         response.json()
         .then((data) => {
-          console.log(data);
-          console.log(data.token);
           localforage.setItem("jwt-token", data.token)
             .then((jwt_token: any) => {
               this.login_status = "Anmeldung war erfolgreich."

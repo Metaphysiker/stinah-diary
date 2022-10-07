@@ -12,4 +12,6 @@ export class AnimalsOverviewComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+
 }

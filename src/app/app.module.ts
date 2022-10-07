@@ -10,6 +10,8 @@ import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AnimalsOverviewComponent } from './animals-overview/animals-overview.component';
 import { DebuggerComponent } from './debugger/debugger.component';
+import { AnimalComponent } from './animal/animal.component';
+import { AnimalFormComponent } from './animal-form/animal-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { DebuggerComponent } from './debugger/debugger.component';
     LoginComponent,
     NavbarComponent,
     AnimalsOverviewComponent,
-    DebuggerComponent
+    DebuggerComponent,
+    AnimalComponent,
+    AnimalFormComponent
   ],
   imports: [
     BrowserModule,
