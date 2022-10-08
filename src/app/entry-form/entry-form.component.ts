@@ -21,7 +21,8 @@ export class EntryFormComponent implements OnInit {
 
   entryForm = new FormGroup({
     content: new FormControl(''),
-    animal_id: new FormControl(0)
+    animal_id: new FormControl(0),
+    image: new FormControl('')
     });
 
   constructor(
@@ -34,10 +35,14 @@ export class EntryFormComponent implements OnInit {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
+    console.log("onSubmit");
+    //console.log(this.entryForm.value.image);
+    //console.log(this.entryForm.value.image.target.files[0]);
+
     this.entryForm.patchValue({
       animal_id: this.animal._id
     });
-    //console.warn(this.entryForm.value);
+    console.warn(this.entryForm.value);
 
   this.entryService.createEntry(this.entryForm.value).then((response: any) => {
       //this.router.navigate(['/animals-overview']);
@@ -49,6 +54,16 @@ export class EntryFormComponent implements OnInit {
 
   addNewEntry(entry: Entry) {
     this.newEntryEvent.emit(entry);
+  }
+
+  onFileChange(event: any) {
+
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.entryForm.patchValue({
+        image: file
+      });
+    }
   }
 
 }

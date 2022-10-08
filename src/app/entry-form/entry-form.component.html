@@ -2,7 +2,7 @@
     <!--
     <h2>Neuer Eintrag</h2>
     -->
-    <form [formGroup]="entryForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="entryForm" enctype="multipart/form-data"  (ngSubmit)="onSubmit()">
       <div class="mb-3">
         <!--
         <label for="content" class="form-label">Inhalt</label>
@@ -19,6 +19,21 @@
         -->
         <input type="hidden" formControlName="animal_id" class="form-control" id="animal_id" aria-describedby="animal_id" value="{{animal._id}}">
       </div>
+
+      <input
+          formControlName="file"
+          id="file"
+          type="file"
+          class="form-control"
+          (change)="onFileChange($event)">
+
+      <!--
+      <div class="mb-3">
+        <label for="formFileLg" class="form-label">Foto</label>
+        <input formControlName="image" class="form-control form-control-lg" id="image" type="file">
+      </div>
+
+      -->
       <button type="submit" [disabled]="!entryForm.valid" class="btn btn-primary">eintragen</button>
     </form>
   </div>

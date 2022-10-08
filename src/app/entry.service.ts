@@ -18,12 +18,20 @@ export class EntryService {
     return new Promise(function(final_resolve, final_reject){
 
       console.log("data: " + data);
-      
+
       let body = new URLSearchParams();
       for (const key in data) {
         body.set(key, data[key]);
         console.log(`${key} -> ${data[key]}`)
       }
+
+      const formData = new FormData();
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+
+      //formData.append("file", new Blob(data.image), "mein-bild.jpg");
+
 
       console.log("here is body: ");
       console.log(body);
@@ -34,9 +42,10 @@ export class EntryService {
         fetch('/secure/entries', {
           method: "POST",
           headers: {
-            'Authorization': 'JWT ' +jwt_token
+            'Authorization': 'JWT ' +jwt_token,
+          //  'Content-Type': 'multipart/form-data'
           },
-          body: body,
+          body: formData,
         })
         .then((response) => response.json())
         .then((data) => {

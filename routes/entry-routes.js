@@ -3,7 +3,6 @@ const router = express.Router();
 const EntryModel = require('../model/entry');
 const AnimalModel = require('../model/animal');
 
-
 router.get(
   '/entries',
   async (req, res, next) => {
@@ -28,6 +27,24 @@ router.get(
 router.post(
   '/entries',
   async (req, res, next) => {
+    let image;
+    let upload_path;
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+      console.log('No files were uploaded.');
+    } else {
+      image = req.files.image
+      upload_path = __dirname + '/uploads' + image.name;
+
+      image.mv(upload_path, function(err){
+        if(err){
+          console.log("image error at move");
+        }
+        console.log("File uploaded");
+
+      })
+
+    }
 
     //console.log('Got body:', req.body);
 

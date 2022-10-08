@@ -6,6 +6,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+const app = express();
 
 const UserModel = require('./model/user');
 const AnimalModel = require('./model/animal');
@@ -22,7 +24,7 @@ const secureRoute = require('./routes/secure-routes');
 const animalRoute = require('./routes/animal-routes');
 const entryRoute = require('./routes/entry-routes');
 
-const app = express();
+app.use(fileUpload());
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/dist/stinah-diary/browser/index.html');
