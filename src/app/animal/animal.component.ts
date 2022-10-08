@@ -16,7 +16,7 @@ export class AnimalComponent implements OnInit {
   animal: Animal = {
     name: "",
     _id: 0
-  }
+  };
 
   constructor(
     private route: ActivatedRoute,
