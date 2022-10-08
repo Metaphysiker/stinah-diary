@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const EntryModel = require('../model/entry');
 const AnimalModel = require('../model/animal');
+const path = require('path');
+
 
 router.get(
   '/entries',
@@ -34,7 +36,7 @@ router.post(
       console.log('No files were uploaded.');
     } else {
       image = req.files.image
-      upload_path = __dirname + '/uploads' + image.name;
+      upload_path = path.join(__dirname, '../uploads/' + image.name);
 
       image.mv(upload_path, function(err){
         if(err){

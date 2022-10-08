@@ -22,7 +22,8 @@ export class EntryFormComponent implements OnInit {
   entryForm = new FormGroup({
     content: new FormControl(''),
     animal_id: new FormControl(0),
-    image: new FormControl('')
+    image: new FormControl(''),
+    file: new FormControl('')
     });
 
   constructor(
