@@ -1,5 +1,9 @@
 #!/bin/bash
 ng build
+git add .
+git commit -m "ng build"
+git push origin main
+
 ssh sandro@159.65.120.231 << EOF
   cd stinah-diary
   git pull origin main
