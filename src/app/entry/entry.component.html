@@ -5,7 +5,7 @@
     -->
     <div class="card-body">
       <p>
-        Datum: {{entry.createdAt}}
+        Datum: {{entry.updatedAt.toLocaleDateString("de")}}
       </p>
       <hr>
           <pre class="card-text">{{entry.content}}</pre>

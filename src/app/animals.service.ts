@@ -25,6 +25,12 @@ export class AnimalsService {
         })
         .then((response) => response.json())
         .then((data: any) => {
+
+          for (let i = 0; i < data.entries.length; i++) {
+            data.entries[i].updatedAt = new Date(data.entries[i].updatedAt);
+            data.entries[i].createdAt = new Date(data.entries[i].createdAt);
+          }
+          
           final_resolve(data);
         });
       })
@@ -45,10 +51,14 @@ export class AnimalsService {
         })
         .then((response) => response.json())
         .then((data: any) => {
-          console.log(data);
           for (let i = 0; i < data.length; i++) {
             data[i].updatedAt = new Date(data[i].updatedAt);
             data[i].createdAt = new Date(data[i].createdAt);
+          }
+
+          for (let i = 0; i < data.entries.length; i++) {
+            data.entries[i].updatedAt = new Date(data.entries[i].updatedAt);
+            data.entries[i].createdAt = new Date(data.entries[i].createdAt);
           }
 
           final_resolve(data);
