@@ -12,6 +12,7 @@ const app = express();
 const UserModel = require('./model/user');
 const AnimalModel = require('./model/animal');
 const EntryModel = require('./model/entry');
+const FileModel = require('./model/file');
 
 mongoose.connect('mongodb://127.0.0.1:27017/stinah-diary');
 mongoose.connection.on('error', error => console.log(error) );
@@ -31,6 +32,8 @@ app.get('/', (req, res) => {
 })
 
 app.use(express.static(__dirname + '/dist/stinah-diary/browser'));
+console.log(__dirname + '/uploads');
+app.use('/uploads', passport.authenticate('jwt-from-parameter', { session: false }), express.static(__dirname + '/uploads'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 

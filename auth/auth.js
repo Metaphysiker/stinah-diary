@@ -21,6 +21,23 @@ passport.use(
 );
 
 passport.use(
+  'jwt-from-parameter',
+  new JWTstrategy(
+    {
+      secretOrKey: 'TOP_SECRET',
+      jwtFromRequest: ExtractJWT.fromUrlQueryParameter('jwt-token')
+    },
+    async (token, done) => {
+      try {
+        return done(null, token.user);
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
+
+passport.use(
   'signup',
   new localStrategy(
     {

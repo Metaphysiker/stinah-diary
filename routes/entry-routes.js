@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const EntryModel = require('../model/entry');
+const FileModel = require('../model/file');
 const AnimalModel = require('../model/animal');
 const path = require('path');
+
 
 
 router.get(
@@ -31,28 +33,51 @@ router.post(
   async (req, res, next) => {
     let image;
     let upload_path;
+    let file;
 
     if (!req.files || Object.keys(req.files).length === 0) {
-      console.log('No files were uploaded.');
+      //console.log('No files were uploaded.');
     } else {
-      image = req.files.image
-      upload_path = path.join(__dirname, '../uploads/' + image.name);
-
-      image.mv(upload_path, function(err){
-        if(err){
-          console.log("image error at move");
-        }
-        console.log("File uploaded");
-
-      })
-
+      //console.log('files are present.');
     }
-
-    //console.log('Got body:', req.body);
 
     try {
       const entry = await EntryModel.create({ content: req.body.content, animal_id: req.body.animal_id });
       const animal = await AnimalModel.findOneAndUpdate({ _id: req.body.animal_id }, {updatedAt: new Date()});
+
+      if(req.files && req.files.image){
+        const file = await FileModel.create({});
+
+        image = req.files.image
+        upload_path = path.join(__dirname, '../uploads/' + file._id + "-" + image.name);
+
+        image.mv(upload_path, async function(err){
+          if(err){
+
+          } else {
+            //file = await FileModel.create({}); //FileModel.create({name: image.name, entry_id: entry._id});
+            try {
+              var entry_filter =  {_id: file._id};
+              var new_entry_fields = {
+                          name: file._id + "-" + image.name,
+                          entry_id: entry._id
+                        };
+              const file2 = await FileModel.findOneAndUpdate(
+                entry_filter,
+                new_entry_fields,
+                {
+                  new: true
+                });
+            } catch (err){
+
+            }
+
+          }
+
+        })
+
+      }
+
       res.json(entry)
     } catch (error) {
       console.log(error);
@@ -62,3 +87,11 @@ router.post(
 );
 
 module.exports = router;
+
+
+async function asyncCall() {
+
+  const result = await resolveAfter2Seconds();
+
+
+}
