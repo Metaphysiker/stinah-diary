@@ -11,9 +11,12 @@
     </div>
   </div>
 
-  <app-entry></app-entry>
+  <div *ngIf="animal.entries">
+    <app-entries [entries]="animal.entries"></app-entries>
+  </div>
 
-  <app-entry-form></app-entry-form>
+
+  <app-entry-form [input_animal_id]="animal._id"></app-entry-form>
 
   <button routerLink="/animals-overview" class="btn btn-primary my-2">Zurück zur Übersicht</button>
 

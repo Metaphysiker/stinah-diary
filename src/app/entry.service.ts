@@ -14,11 +14,19 @@ export class EntryService {
     private http: HttpClient
   ) { }
 
-  createEntry(content: any){
+  createEntry(data: any){
     return new Promise(function(final_resolve, final_reject){
 
+      console.log("data: " + data);
+      
       let body = new URLSearchParams();
-      body.set('content', content);
+      for (const key in data) {
+        body.set(key, data[key]);
+        console.log(`${key} -> ${data[key]}`)
+      }
+
+      console.log("here is body: ");
+      console.log(body);
 
       localforage.getItem("jwt-token")
       .then((jwt_token: any) => {

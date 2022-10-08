@@ -33,6 +33,7 @@ export class AnimalComponent implements OnInit {
     .then((data: any) => {
       console.log("get Animal in animal")
       console.log(data);
+      console.log(data.entries);
       this.animal = data;
     });
 

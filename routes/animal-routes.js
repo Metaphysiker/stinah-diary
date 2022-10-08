@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AnimalModel = require('../model/animal');
+const EntryModel = require('../model/entry');
 
 router.get(
   '/animals',
@@ -8,7 +9,6 @@ router.get(
 
     const filter = {};
     const animals = await AnimalModel.find(filter).sort({'updatedAt': -1});
-
     res.json(animals)
   }
 );
@@ -18,8 +18,10 @@ router.get(
   async (req, res, next) => {
     const filter = {_id: req.params.id};
     const animal = await AnimalModel.findOne(filter);
+    const entries = await EntryModel.find({animal_id: animal._id});
+    const final_response = Object.assign({}, animal.toObject(), {entries: entries.map((r) => r.toObject())});
 
-    res.json(animal)
+    res.json(final_response)
   }
 );
 

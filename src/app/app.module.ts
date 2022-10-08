@@ -15,6 +15,7 @@ import { AnimalFormComponent } from './animal-form/animal-form.component';
 import { EntryComponent } from './entry/entry.component';
 import { SignupComponent } from './signup/signup.component';
 import { EntryFormComponent } from './entry-form/entry-form.component';
+import { EntriesComponent } from './entries/entries.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { EntryFormComponent } from './entry-form/entry-form.component';
     AnimalFormComponent,
     EntryComponent,
     SignupComponent,
-    EntryFormComponent
+    EntryFormComponent,
+    EntriesComponent
   ],
   imports: [
     BrowserModule,

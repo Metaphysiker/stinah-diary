@@ -45,7 +45,7 @@ export class AnimalsService {
         })
         .then((response) => response.json())
         .then((data: any) => {
-
+          console.log(data);
           for (let i = 0; i < data.length; i++) {
             data[i].updatedAt = new Date(data[i].updatedAt);
             data[i].createdAt = new Date(data[i].createdAt);

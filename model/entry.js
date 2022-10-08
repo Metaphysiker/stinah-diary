@@ -7,6 +7,10 @@ const EntrySchema = new Schema({
   content: {
     type: String,
     required: true
+  },
+  animal_id: {
+    type: String,
+    required: true
   }
 },
 {

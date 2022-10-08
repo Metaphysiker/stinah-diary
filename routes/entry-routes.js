@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const EntryModel = require('../model/entry');
+const AnimalModel = require('../model/animal');
+
 
 router.get(
   '/entries',
@@ -30,7 +32,8 @@ router.post(
     //console.log('Got body:', req.body);
 
     try {
-      const entry = await EntryModel.create({ name: req.body.name });
+      const entry = await EntryModel.create({ content: req.body.content, animal_id: req.body.animal_id });
+      const animal = await AnimalModel.findOneAndUpdate({ _id: req.body.animal_id }, {updatedAt: new Date()});
       res.json(entry)
     } catch (error) {
       console.log(error);

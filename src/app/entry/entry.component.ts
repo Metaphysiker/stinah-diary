@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-entry',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./entry.component.css']
 })
 export class EntryComponent implements OnInit {
+  @Input() entry: any = "";
 
   constructor() { }
 

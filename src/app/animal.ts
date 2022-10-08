@@ -3,4 +3,5 @@ export interface Animal {
     _id: number;
     updatedAt?: Date;
     createdAt?: Date;
+    entries?: Array<any>;
 }
