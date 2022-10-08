@@ -16,6 +16,9 @@ import { EntryComponent } from './entry/entry.component';
 import { SignupComponent } from './signup/signup.component';
 import { EntryFormComponent } from './entry-form/entry-form.component';
 import { EntriesComponent } from './entries/entries.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -33,10 +36,17 @@ import { EntriesComponent } from './entries/entries.component';
     EntriesComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

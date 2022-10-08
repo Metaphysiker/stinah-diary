@@ -25,10 +25,10 @@ const entryRoute = require('./routes/entry-routes');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/dist/stinah-diary/index.html');
+  res.sendFile(__dirname + '/dist/stinah-diary/browser/index.html');
 })
 
-app.use(express.static(__dirname + '/dist/stinah-diary'));
+app.use(express.static(__dirname + '/dist/stinah-diary/browser'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
