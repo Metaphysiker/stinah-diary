@@ -3,7 +3,11 @@
     <form [formGroup]="entryForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
         <label for="content" class="form-label">Inhalt</label>
+        <!--
         <input type="text" formControlName="content" class="form-control" id="content" aria-describedby="content">
+        -->
+        <textarea class="form-control" formControlName="content" id="content" aria-describedby="content" rows="3"></textarea>
+
       </div>
       <div class="mb-3">
         <!--

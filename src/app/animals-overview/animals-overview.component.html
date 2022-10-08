@@ -10,7 +10,7 @@
   <tbody>
     <tr *ngFor="let animal of animals">
       <td>
-        <button routerLink="/animal/{{animal._id}}" class="btn btn-primary">{{animal.name}}</button>
+        <button routerLink="/animal/{{animal._id}}" class="btn btn-primary w-100">{{animal.name}}</button>
       </td>
       <td>
         <ng-template [ngIf]="animal.updatedAt !== undefined">
