@@ -9,7 +9,7 @@
         <!--
         <label for="animal_id" class="form-label">animal_id</label>
         -->
-        <input type="hidden" formControlName="animal_id" class="form-control" id="animal_id" aria-describedby="animal_id" value="{{input_animal_id}}">
+        <input type="hidden" formControlName="animal_id" class="form-control" id="animal_id" aria-describedby="animal_id" value="{{animal._id}}">
       </div>
       <button type="submit" [disabled]="!entryForm.valid" class="btn btn-primary">eintragen</button>
     </form>

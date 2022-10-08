@@ -36,6 +36,13 @@ export class AnimalsOverviewComponent implements OnInit {
 
   isDate(obj: any): boolean { return obj instanceof Date; }
 
+  addAnimal(animal: Animal) {
+    this.animalService.getAnimals().then((response: any) => {
+
+      this.animals = response;
+    });
+  }
+
 
 
 }

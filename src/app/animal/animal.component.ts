@@ -31,9 +31,6 @@ export class AnimalComponent implements OnInit {
     this.animal_id = this.route.snapshot.paramMap.get('id');
     this.animalService.getAnimal(this.animal_id)
     .then((data: any) => {
-      console.log("get Animal in animal")
-      console.log(data);
-      console.log(data.entries);
       this.animal = data;
     });
 

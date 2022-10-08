@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Entry } from '../entry';
 
 @Component({
   selector: 'app-entry',

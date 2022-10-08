@@ -1,3 +1,5 @@
-<div *ngFor="let entry of entries">
+<app-entry-form [animal]="animal" (newEntryEvent)="addEntry($event)"></app-entry-form>
+
+<div *ngFor="let entry of animal.entries">
   <app-entry [entry]="entry"></app-entry>
 </div>
