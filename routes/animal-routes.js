@@ -18,7 +18,7 @@ router.get(
   async (req, res, next) => {
     const filter = {_id: req.params.id};
     const animal = await AnimalModel.findOne(filter);
-    const entries = await EntryModel.find({animal_id: animal._id});
+    const entries = await EntryModel.find({animal_id: animal._id}).sort({'updatedAt': -1});
     const final_response = Object.assign({}, animal.toObject(), {entries: entries.map((r) => r.toObject())});
 
     res.json(final_response)
