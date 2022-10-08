@@ -14,6 +14,29 @@ export class EntryService {
     private http: HttpClient
   ) { }
 
+  getEntry(id: Number){
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/entries/' + id, {
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+          data.updatedAt = new Date(data.updatedAt);
+          data.createdAt = new Date(data.createdAt);
+
+
+          final_resolve(data);
+        });
+      })
+    })
+  }
+
   createEntry(data: any){
     return new Promise(function(final_resolve, final_reject){
 
@@ -50,6 +73,30 @@ export class EntryService {
         .then((response) => response.json())
         .then((data) => {
             final_resolve(data);
+        });
+      })
+    })
+  }
+
+  getEntriesOfAnimal(animal_id: any){
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/entries/animal/' + animal_id, {
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+          for (let i = 0; i < data.length; i++) {
+            data[i].updatedAt = new Date(data[i].updatedAt);
+            data[i].createdAt = new Date(data[i].createdAt);
+          }
+
+          final_resolve(data);
         });
       })
     })

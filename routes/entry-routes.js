@@ -19,12 +19,25 @@ router.get(
 );
 
 router.get(
+  '/entries/animal/:animal_id',
+  async (req, res, next) => {
+
+    const filter = {animal_id: req.params.animal_id};
+    const entries = await EntryModel.find(filter).sort({'updatedAt': -1});
+
+    res.json(entries)
+  }
+);
+
+router.get(
   '/entries/:id',
   async (req, res, next) => {
     const filter = {_id: req.params.id};
     const entry = await EntryModel.findOne(filter);
+    const images = await FileModel.find({entry_id: entry._id}).sort({'updatedAt': -1});
+    const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
 
-    res.json(entry)
+    res.json(final_response)
   }
 );
 

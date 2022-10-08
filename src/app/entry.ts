@@ -1,7 +1,8 @@
 export interface Entry {
     content: string;
-    _id: number;
-    animal_id: number;
+    _id?: number;
+    animal_id?: number;
     updatedAt?: Date;
     createdAt?: Date;
+    images?: Array<any>;
 }

@@ -5,10 +5,20 @@
     -->
     <div class="card-body">
       <p>
-        Datum: {{entry.updatedAt.toLocaleDateString("de")}}
+        <ng-template [ngIf]="entry.updatedAt">
+              Datum: {{entry.updatedAt.toLocaleDateString("de")}}
+        </ng-template>
+
       </p>
       <hr>
           <pre class="card-text">{{entry.content}}</pre>
 
     </div>
+  </div>
+
+
+  <div *ngFor="let image of entry.images">
+    <ng-template [ngIf]="image">
+      <app-image [image_url]="image.name" ></app-image>
+    </ng-template>
   </div>

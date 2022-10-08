@@ -1,5 +1,8 @@
 <app-entry-form [animal]="animal" (newEntryEvent)="addEntry($event)"></app-entry-form>
 
-<div *ngFor="let entry of animal.entries">
-  <app-entry [entry]="entry"></app-entry>
+<div *ngFor="let entry of entries">
+  <ng-template [ngIf]="entry._id !== undefined">
+      <app-entry [input_entry_id]="entry._id"></app-entry>
+  </ng-template>
+
 </div>

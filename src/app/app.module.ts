@@ -16,6 +16,7 @@ import { EntryComponent } from './entry/entry.component';
 import { SignupComponent } from './signup/signup.component';
 import { EntryFormComponent } from './entry-form/entry-form.component';
 import { EntriesComponent } from './entries/entries.component';
+import { ImageComponent } from './image/image.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
@@ -33,7 +34,8 @@ import { RouterModule } from '@angular/router';
     EntryComponent,
     SignupComponent,
     EntryFormComponent,
-    EntriesComponent
+    EntriesComponent,
+    ImageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

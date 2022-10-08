@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AnimalsService } from '../animals.service';
+import { EntryService } from '../entry.service';
 import { Animal } from '../animal';
 import { Entry } from '../entry';
 
@@ -10,24 +11,30 @@ import { Entry } from '../entry';
 })
 export class EntriesComponent implements OnInit {
 
-  @Input() input_animal_id = 0;
-  @Input() entries: any[] = [];
+  @Input() input_entry_id = 0;
+  entries: Entry[] = [];
   @Input() animal: Animal = {
     name: "",
     _id: 0
   };
 
   constructor(
-    private animalsService: AnimalsService
+    private animalsService: AnimalsService,
+    private entryService: EntryService
   ) { }
 
   ngOnInit(): void {
+    this.getEntries();
   }
 
   addEntry(entry: Entry){
-    this.animalsService.getAnimal(this.animal._id)
+    this.getEntries();
+  }
+
+  getEntries(){
+    this.entryService.getEntriesOfAnimal(this.animal._id)
     .then((data: any) => {
-      this.animal = data;
+      this.entries = data;
     });
   }
 
