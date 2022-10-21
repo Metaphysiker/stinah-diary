@@ -14,6 +14,8 @@ const AnimalSchema = new Schema({
 }
 );
 
+AnimalSchema.index({name: 'text'});
+
 const AnimalModel = mongoose.model('animal', AnimalSchema);
 
 module.exports = AnimalModel;

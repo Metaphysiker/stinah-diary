@@ -19,6 +19,16 @@ router.get(
 );
 
 router.get(
+  '/entries/search/:search_string',
+  async (req, res, next) => {
+
+    const entries = await EntryModel.find({$text: {$search: req.params.search_string}})
+
+    res.json(entries)
+  }
+);
+
+router.get(
   '/entries/animal/:animal_id',
   async (req, res, next) => {
 

@@ -18,6 +18,9 @@ const EntrySchema = new Schema({
 }
 );
 
+EntrySchema.index({content: 'text'});
+
+
 const EntryModel = mongoose.model('entry', EntrySchema);
 
 module.exports = EntryModel;
