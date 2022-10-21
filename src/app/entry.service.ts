@@ -37,6 +37,28 @@ export class EntryService {
     })
   }
 
+  deleteEntry(id: Number){
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/entries/' + id, {
+          method: "DELETE",
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+
+
+          final_resolve("entry deleted");
+        });
+      })
+    })
+  }
+
   createEntry(data: any){
     return new Promise(function(final_resolve, final_reject){
 

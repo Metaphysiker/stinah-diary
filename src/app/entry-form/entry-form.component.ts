@@ -12,6 +12,8 @@ import { Animal } from '../animal';
 })
 export class EntryFormComponent implements OnInit {
 
+  pleaseWait: boolean = false;
+
   @Input() animal: Animal = {
       name: "",
       _id: 0
@@ -40,15 +42,19 @@ export class EntryFormComponent implements OnInit {
     //console.log(this.entryForm.value.image);
     //console.log(this.entryForm.value.image.target.files[0]);
 
+    this.pleaseWait = true;
+
+
     this.entryForm.patchValue({
       animal_id: this.animal._id
     });
-    console.warn(this.entryForm.value);
+    //console.warn(this.entryForm.value);
 
   this.entryService.createEntry(this.entryForm.value).then((response: any) => {
       //this.router.navigate(['/animals-overview']);
       //console.log(response);
       this.addNewEntry(response);
+      this.pleaseWait = false;
       this.entryForm.reset();
     });
   }

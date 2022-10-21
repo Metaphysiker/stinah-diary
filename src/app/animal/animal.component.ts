@@ -11,6 +11,7 @@ import { Animal } from '../animal';
 })
 export class AnimalComponent implements OnInit {
 
+  showAnimal: boolean = true;
   //animal$: Observable<any>;
   animal_id: any;
   animal: Animal = {
@@ -34,6 +35,16 @@ export class AnimalComponent implements OnInit {
       this.animal = data;
     });
 
+  }
+
+  deleteAnimal(){
+    if(confirm("Bist du sicher?")) {
+      this.animalService.deleteAnimal(this.animal._id)
+      .then((data: any) => {
+        console.log(data);
+        this.showAnimal = false;
+      });
+    }
   }
 
 }

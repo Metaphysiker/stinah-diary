@@ -8,6 +8,9 @@ import { EntryService } from '../entry.service';
   styleUrls: ['./entry.component.css']
 })
 export class EntryComponent implements OnInit {
+
+  showEntry: boolean = true;
+
   entry: Entry = {
     content: "",
     createdAt: new Date(),
@@ -29,6 +32,16 @@ export class EntryComponent implements OnInit {
       console.log(data);
       this.entry = data;
     });
+  }
+
+  deleteEntry(){
+    if(confirm("Bist du sicher?")) {
+      this.entryService.deleteEntry(this.input_entry_id)
+      .then((data: any) => {
+        console.log(data);
+        this.showEntry = false;
+      });
+    }
   }
 
 }

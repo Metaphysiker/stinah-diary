@@ -30,7 +30,7 @@ export class AnimalsService {
             data.entries[i].updatedAt = new Date(data.entries[i].updatedAt);
             data.entries[i].createdAt = new Date(data.entries[i].createdAt);
           }
-          
+
           final_resolve(data);
         });
       })
@@ -88,6 +88,28 @@ export class AnimalsService {
         .then((response) => response.json())
         .then((data) => {
             final_resolve(data);
+        });
+      })
+    })
+  }
+
+  deleteAnimal(id: Number){
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/animals/' + id, {
+          method: "DELETE",
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+
+
+          final_resolve("animal deleted");
         });
       })
     })

@@ -41,4 +41,14 @@ router.post(
   }
 );
 
+router.delete('/animals/:id',
+  async (req, res, next) => {
+    const filter = {_id: req.params.id};
+    AnimalModel.deleteOne(filter, function (err) {
+      if (err) return handleError(err);
+      res.json("animal_deleted")
+    });
+  }
+)
+
 module.exports = router;

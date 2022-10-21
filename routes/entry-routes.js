@@ -4,7 +4,7 @@ const EntryModel = require('../model/entry');
 const FileModel = require('../model/file');
 const AnimalModel = require('../model/animal');
 const path = require('path');
-
+const fs = require('fs');
 
 
 router.get(
@@ -98,6 +98,39 @@ router.post(
 
   }
 );
+
+router.delete('/entries/:id',
+  async (req, res, next) => {
+    const filter = {_id: req.params.id};
+    const file_filter = {entry_id: req.params.id};
+
+    EntryModel.deleteOne(filter, function (err) {
+      if (err) return handleError(err);
+    });
+
+    FileModel.findOne(file_filter).then(function (file, err) {
+      //console.log("file: " + file);
+      if (file) {
+        file_path = path.join(__dirname, '../uploads/' + file.name);
+        //console.log(file_path);
+        fs.unlink(file_path, (err_file_path) => {
+          if (err_file_path) {
+              throw err_file_path;
+          }
+          //console.log("Delete File successfully.");
+          FileModel.deleteOne(file_filter, function (err_delete_file_model){
+            if (err_delete_file_model) return handleError(err_delete_file_model);
+
+          });
+      });
+      }
+
+    })
+
+
+    res.json("entry_deleted")
+  }
+)
 
 module.exports = router;
 

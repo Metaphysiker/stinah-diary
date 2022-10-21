@@ -1,3 +1,5 @@
+<ng-template [ngIf]="showAnimal">
+
 <div class="container">
 
     <button routerLink="/animals-overview" class="btn btn-primary my-2">Zurück zur Übersicht</button>
@@ -7,7 +9,13 @@
     <img src="..." class="card-img-top" alt="...">
     -->
     <div class="card-body">
-      <h5 class="card-title">{{animal.name}}</h5>
+      <div class="d-flex d-flex justify-content-between">
+          <h5 class="card-title">{{animal.name}}</h5>  
+        <div class="d-flex justify-content-end">
+          <button type="button" (click)="deleteAnimal()" class="btn-close" aria-label="delete"></button>
+
+        </div>
+      </div>
     </div>
   </div>
 
@@ -19,3 +27,4 @@
 
 
 </div>
+</ng-template>

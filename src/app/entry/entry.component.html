@@ -1,18 +1,28 @@
+<ng-template [ngIf]="showEntry">
 
   <div class="card my-2">
     <!--
     <img src="..." class="card-img-top" alt="...">
     -->
     <div class="card-body">
-      <p>
+      <div class="d-flex d-flex justify-content-between">
         <ng-template [ngIf]="entry.updatedAt">
+          <div class="d-flex justify-content-start">
               Datum: {{entry.updatedAt.toLocaleDateString("de")}}
+          </div>
         </ng-template>
+        <div class="d-flex justify-content-end">
+          <button type="button" (click)="deleteEntry()" class="btn-close" aria-label="delete"></button>
 
-      </p>
+        </div>
+      </div>
       <hr>
-          <pre class="card-text">{{entry.content}}</pre>
-
+      <p class="card-text">
+        {{entry.content}}
+      </p>
+      <!--
+      <button (click)="deleteEntry()" class="btn btn-danger">Eintrag löschen</button>
+      -->
     </div>
   </div>
 
@@ -22,3 +32,4 @@
       <app-image [image_url]="image.name" ></app-image>
     </ng-template>
   </div>
+</ng-template>
