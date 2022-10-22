@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,7 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatSliderModule } from '@angular/material/slider';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -53,9 +54,11 @@ import { MatNativeDateModule } from '@angular/material/core';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    //MatDatepickerModule,
-  //  MatNativeDateModule,
-
+    //FormsModule,
+    MatSliderModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
