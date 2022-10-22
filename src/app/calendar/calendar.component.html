@@ -1,1 +1,26 @@
-<p>calendar works!</p>
+<div class="container">
+  <h1>Kalender</h1>
+    <div class="mb-3">
+      <label for="start">
+        Datum auswählen:
+      </label>
+      <br>
+      <br>
+      <input type="date" [formControl]="date" value="{{date.value}}">
+    </div>
+
+    <button (click)="getEntriesByDate()" class="btn btn-primary">Suchen</button>
+
+
+    <div *ngFor="let entry of entries">
+      <ng-template [ngIf]="entry._id !== undefined">
+          <app-entry [input_entry_id]="entry._id"></app-entry>
+      </ng-template>
+
+    </div>
+
+    <div *ngIf="entries.length === 0">
+        Nichts gefunden.
+    </div>
+
+</div>

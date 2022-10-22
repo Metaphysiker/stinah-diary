@@ -19,6 +19,39 @@ router.get(
 );
 
 router.get(
+  '/entries/date/:date',
+  async (req, res, next) => {
+
+    //const filter = {};
+    //const entries = await EntryModel.find(filter).sort({'createdAt': -1});
+
+    var date = req.params.date;
+    console.log("date: " + date);
+    //var iso_date = ISODate(date);
+    //console.log("iso_date: " + iso_date);
+
+    var datex = new Date(date);
+    console.log(datex);
+
+    const startOfDay = new Date(date);
+    startOfDay.setUTCHours(0, 0, 0, 0);
+console.log(startOfDay);
+    const endOfDay = new Date(date);
+    endOfDay.setUTCHours(23, 59, 59, 999);
+console.log(endOfDay);
+
+    const entries = await EntryModel.find({
+        createdAt: {
+            $gte: startOfDay,
+            $lt: endOfDay
+        }
+    })
+
+    res.json(entries)
+  }
+);
+
+router.get(
   '/entries/search/',
   async (req, res, next) => {
 

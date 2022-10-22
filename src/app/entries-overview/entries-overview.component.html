@@ -3,11 +3,6 @@
   <div class="mb-3">
     <input type="text" class="form-control" [formControl]="search_string" placeholder="Suchen..." aria-describedby="search_string">
   </div>
-<div class="mb-3">
-  <label for="start">Datum auswählen: </label>
-
-  <input type="date" id="start" name="trip-start">
-</div>
 
   <br>
   <button (click)="searchEntries()" class="btn btn-primary">Suchen</button>

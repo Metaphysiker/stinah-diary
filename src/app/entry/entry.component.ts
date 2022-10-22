@@ -29,7 +29,7 @@ export class EntryComponent implements OnInit {
   getEntry(){
     this.entryService.getEntry(this.input_entry_id)
     .then((data: any) => {
-      console.log(data);
+      //console.log(data);
       this.entry = data;
     });
   }
@@ -38,7 +38,7 @@ export class EntryComponent implements OnInit {
     if(confirm("Bist du sicher?")) {
       this.entryService.deleteEntry(this.input_entry_id)
       .then((data: any) => {
-        console.log(data);
+        //console.log(data);
         this.showEntry = false;
       });
     }

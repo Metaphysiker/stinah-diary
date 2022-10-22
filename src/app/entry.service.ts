@@ -62,12 +62,12 @@ export class EntryService {
   createEntry(data: any){
     return new Promise(function(final_resolve, final_reject){
 
-      console.log("data: " + data);
+      //console.log("data: " + data);
 
       let body = new URLSearchParams();
       for (const key in data) {
         body.set(key, data[key]);
-        console.log(`${key} -> ${data[key]}`)
+        //console.log(`${key} -> ${data[key]}`)
       }
 
       const formData = new FormData();
@@ -95,6 +95,30 @@ export class EntryService {
         .then((response) => response.json())
         .then((data) => {
             final_resolve(data);
+        });
+      })
+    })
+  }
+
+  getEntriesByDate(date: any){
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/entries/date/' + date, {
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+          for (let i = 0; i < data.length; i++) {
+            data[i].updatedAt = new Date(data[i].updatedAt);
+            data[i].createdAt = new Date(data[i].createdAt);
+          }
+
+          final_resolve(data);
         });
       })
     })
