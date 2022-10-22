@@ -3,6 +3,7 @@
   <div class="mb-3">
     <input type="text" class="form-control" [formControl]="search_string" placeholder="Suchen..." aria-describedby="search_string">
   </div>
+
   <button (click)="searchEntries()" class="btn btn-primary">Suchen</button>
 
   <div *ngFor="let entry of entries">

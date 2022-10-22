@@ -133,17 +133,19 @@ router.delete('/entries/:id',
       //console.log("file: " + file);
       if (file) {
         file_path = path.join(__dirname, '../uploads/' + file.name);
-        //console.log(file_path);
-        fs.unlink(file_path, (err_file_path) => {
-          if (err_file_path) {
-              throw err_file_path;
-          }
-          //console.log("Delete File successfully.");
-          FileModel.deleteOne(file_filter, function (err_delete_file_model){
-            if (err_delete_file_model) return handleError(err_delete_file_model);
+        if (fs.existsSync(file_path)) {
+          fs.unlink(file_path, (err_file_path) => {
+            if (err_file_path) {
+                throw err_file_path;
+            }
+            //console.log("Delete File successfully.");
+            FileModel.deleteOne(file_filter, function (err_delete_file_model){
+              if (err_delete_file_model) return handleError(err_delete_file_model);
 
-          });
-      });
+            });
+        });
+        }
+
       }
 
     })
