@@ -16,10 +16,13 @@ import { EntryComponent } from './entry/entry.component';
 import { SignupComponent } from './signup/signup.component';
 import { EntryFormComponent } from './entry-form/entry-form.component';
 import { EntriesComponent } from './entries/entries.component';
+import { EntriesOverviewComponent } from './entries-overview/entries-overview.component';
+
 import { ImageComponent } from './image/image.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { RouterModule } from '@angular/router';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,9 @@ import { RouterModule } from '@angular/router';
     SignupComponent,
     EntryFormComponent,
     EntriesComponent,
-    ImageComponent
+    ImageComponent,
+    EntriesOverviewComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

@@ -19,10 +19,21 @@ router.get(
 );
 
 router.get(
+  '/entries/search/',
+  async (req, res, next) => {
+
+    const filter = {};
+    const entries = await EntryModel.find(filter).sort({'updatedAt': -1});
+
+    res.json(entries)
+  }
+);
+
+router.get(
   '/entries/search/:search_string',
   async (req, res, next) => {
 
-    const entries = await EntryModel.find({$text: {$search: req.params.search_string}})
+    const entries = await EntryModel.find({$text: {$search: req.params.search_string}}).sort({'updatedAt': -1});
 
     res.json(entries)
   }
