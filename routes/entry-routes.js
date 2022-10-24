@@ -5,6 +5,8 @@ const FileModel = require('../model/file');
 const AnimalModel = require('../model/animal');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
+
 
 
 router.get(
@@ -91,7 +93,15 @@ router.get(
     const images = await FileModel.find({entry_id: entry._id}).sort({'updatedAt': -1});
     const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
 
-    res.json(final_response)
+    EntryModel.
+  findOne(filter).
+  populate('animal').
+  exec(function (err, entry) {
+    if (err) return handleError(err);
+    res.json(entry);
+  });
+
+    //res.json(final_response)
   }
 );
 
@@ -109,7 +119,10 @@ router.post(
     }
 
     try {
-      const entry = await EntryModel.create({ content: req.body.content, animal_id: req.body.animal_id });
+      var animal_object_id = new mongoose.Types.ObjectId(req.body.animal_id);
+      console.log(animal_object_id);
+      const entry = await EntryModel.create({ content: req.body.content, animal_id: req.body.animal_id, animal: animal_object_id });
+
       const animal = await AnimalModel.findOneAndUpdate({ _id: req.body.animal_id }, {updatedAt: new Date()});
 
       if(req.files && req.files.image){

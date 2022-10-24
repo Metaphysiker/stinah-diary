@@ -7,6 +7,10 @@ const AnimalSchema = new Schema({
   name: {
     type: String,
     required: true
+  },
+  entries: {
+    type: [{ type: Schema.Types.ObjectId, ref: 'animal' }],
+    required: false
   }
 },
 {

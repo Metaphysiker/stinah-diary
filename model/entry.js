@@ -11,6 +11,10 @@ const EntrySchema = new Schema({
   animal_id: {
     type: String,
     required: true
+  },
+  animal: {
+    type: Schema.Types.ObjectId, ref: 'animal',
+    required: false
   }
 },
 {
