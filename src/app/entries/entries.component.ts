@@ -11,6 +11,8 @@ import { Entry } from '../entry';
 })
 export class EntriesComponent implements OnInit {
 
+  @Input() show_animal_name = true;
+
   @Input() input_entry_id = 0;
   entries: Entry[] = [];
   @Input() animal: Animal = {

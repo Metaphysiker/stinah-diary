@@ -8,7 +8,7 @@
       <div class="d-flex d-flex justify-content-between">
         <ng-template [ngIf]="entry.updatedAt">
           <div class="d-flex justify-content-start">
-              <strong>Datum: </strong>{{entry.updatedAt.toLocaleDateString("de")}} - {{entry.updatedAt.toLocaleTimeString("de")}}
+              <strong>Datum: </strong> {{entry.updatedAt.toLocaleDateString("de")}} - {{entry.updatedAt.toLocaleTimeString("de")}}
           </div>
         </ng-template>
         <div class="d-flex justify-content-end">
@@ -20,11 +20,13 @@
       <p class="card-text">
         {{entry.content}}
       </p>
-      <div *ngIf="entry.animal">
-        <hr />
-        <p class="card-text">
-          <strong>Tier: </strong><a routerLink="/animal/{{entry?.animal?.['_id']}}">{{entry?.animal?.['name']}}</a>
-        </p>
+      <div *ngIf="show_animal_name">
+        <div *ngIf="entry.animal">
+          <hr />
+          <p class="card-text">
+            <strong>Tier: </strong><a routerLink="/animal/{{entry?.animal?.['_id']}}">{{entry?.animal?.['name']}}</a>
+          </p>
+        </div>
       </div>
 
       <!--

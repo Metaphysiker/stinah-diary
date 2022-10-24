@@ -18,6 +18,8 @@ export class EntryComponent implements OnInit {
   };
   @Input() input_entry_id = 0;
 
+  @Input() show_animal_name = true;
+
   constructor(
     private entryService: EntryService
   ) { }
