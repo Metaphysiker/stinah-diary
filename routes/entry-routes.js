@@ -120,7 +120,7 @@ router.post(
 
     try {
       var animal_object_id = new mongoose.Types.ObjectId(req.body.animal_id);
-      console.log(animal_object_id);
+      //console.log(animal_object_id);
       const entry = await EntryModel.create({ content: req.body.content, animal_id: req.body.animal_id, animal: animal_object_id });
 
       const animal = await AnimalModel.findOneAndUpdate({ _id: req.body.animal_id }, {updatedAt: new Date()});
