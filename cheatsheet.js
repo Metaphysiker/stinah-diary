@@ -8,7 +8,7 @@ db.entries.find({}).forEach(function(entry){
 db.files.find({}).forEach(function(file){
   db.files.update(
     {_id: file._id},
-    {$set:{entry: ObjectId(entry.entry_id)}}
+    {$set:{entry: ObjectId(file.entry_id)}}
 )});
 
 
