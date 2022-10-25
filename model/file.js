@@ -11,6 +11,10 @@ const FileSchema = new Schema({
   entry_id: {
     type: String,
     required: false
+  },
+  entry: {
+    type: Schema.Types.ObjectId, ref: 'entry',
+    required: false
   }
 },
 {

@@ -33,6 +33,7 @@ export class EntryComponent implements OnInit {
     .then((data: any) => {
       //console.log(data);
       this.entry = data;
+      console.log(data);
     });
   }
 

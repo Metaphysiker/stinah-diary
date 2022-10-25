@@ -8,6 +8,8 @@ const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const sharp = require('sharp');
+const isImage = require('is-image');
+
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -95,15 +97,18 @@ router.get(
   async (req, res, next) => {
     const filter = {_id: req.params.id};
     const entry = await EntryModel.findOne(filter);
-    const images = await FileModel.find({entry_id: entry._id}).sort({'updatedAt': -1});
-    const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
+    const images = await FileModel.find({entry: entry._id}).sort({'updatedAt': -1});
+    //const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
 
     EntryModel.
   findOne(filter).
   populate('animal').
   exec(function (err, entry) {
     if (err) return handleError(err);
-    res.json(entry);
+
+    const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
+
+    res.json(final_response);
   });
 
     //res.json(final_response)
@@ -117,69 +122,19 @@ router.post(
     let upload_path;
     let file;
 
-    fs.access(path.join(__dirname, '../uploads/'), (error) => {
-      if (error) {
-        fs.mkdirSync(path.join(__dirname, '../uploads/'));
-      }
-    });
+    const animal_object_id = new mongoose.Types.ObjectId(req.body.animal_id);
+    const entry = await EntryModel.create({ content: req.body.content, animal_id: req.body.animal_id, animal: animal_object_id });
+    const animal = await AnimalModel.findOneAndUpdate({ _id: req.body.animal_id }, {updatedAt: new Date()});
 
-    if (!req.files || Object.keys(req.files).length === 0) {
-      //console.log('No files were uploaded.');
-    } else {
-      //console.log('files are present.');
-    }
-
-    try {
-      var animal_object_id = new mongoose.Types.ObjectId(req.body.animal_id);
-      //console.log(animal_object_id);
-      const entry = await EntryModel.create({ content: req.body.content, animal_id: req.body.animal_id, animal: animal_object_id });
-
-      const animal = await AnimalModel.findOneAndUpdate({ _id: req.body.animal_id }, {updatedAt: new Date()});
-
-      if(req.files && req.files.image){
-
-        const file = await FileModel.create({});
-
-        image = req.files.image
-
-        upload_path = path.join(__dirname, '../uploads/' + file._id + "-" + image.name);
-
-        image.mv(upload_path, async function(err){
-          if(err){
-
-          } else {
-            //file = await FileModel.create({}); //FileModel.create({name: image.name, entry_id: entry._id});
-
-            await sharp(upload_path)
-              .webp({ quality: 20 })
-              .toFile(path.join(__dirname, '../uploads/' + file._id + ".webp"));
-
-            try {
-              var entry_filter =  {_id: file._id};
-              var new_entry_fields = {
-                          name: file._id + ".webp",
-                          entry_id: entry._id
-                        };
-              const file2 = await FileModel.findOneAndUpdate(
-                entry_filter,
-                new_entry_fields,
-                {
-                  new: true
-                });
-            } catch (err){
-
-            }
-
-          }
-
-        })
-
-      }
-
-      res.json(entry)
-    } catch (error) {
-      console.log(error);
-    }
+    create_file(req, entry)
+      .then(() => {
+        res.json(entry);
+      })
+      .catch(
+        (error) => {
+          res.json(error);
+        }
+      );
 
   }
 );
@@ -226,5 +181,94 @@ async function asyncCall() {
 
   const result = await resolveAfter2Seconds();
 
+}
 
+
+
+function create_file(req, entry){
+  return new Promise(function(final_resolve, final_reject){
+    if(req.files && req.files.image){
+      FileModel.create({})
+      .then(function(file){
+        const image = req.files.image
+        const upload_path = path.join(__dirname, '../uploads/' + file._id + "-" + image.name);
+
+        image.mv(upload_path, async function(err){
+          if(err){
+
+          } else {
+
+            compress_image(upload_path)
+            .then((upload_path2) => {
+
+              const filename = path.basename(upload_path2);
+              console.log(filename);
+
+              var file_filter =  {_id: file._id};
+              var new_file_fields = {
+                          name: filename,
+                          entry_id: entry._id,
+                          entry: entry._id
+                        };
+
+
+              FileModel.findOneAndUpdate(
+                file_filter,
+                new_file_fields,
+                {
+                  new: true
+                }).then((file2) => {
+                  console.log("file2: ");
+                  console.log(file2);
+                  final_resolve();
+                });
+
+            })
+
+          }
+
+        })
+
+      });
+
+
+    } else {
+      final_resolve();
+    }
+
+
+  }) // end of final promise
+}
+
+function compress_image(file_path){
+  return new Promise(function(final_resolve, final_reject){
+
+    if(isImage(file_path)){
+
+      const filename_without_extension = path.parse(file_path).name;
+      var new_path = path.join(__dirname, '../uploads/' + filename_without_extension + ".webp");
+
+      if(file_path === new_path){
+        new_path = path.join(__dirname, '../uploads/' + filename_without_extension + "0" + ".webp");
+      }
+
+      sharp(file_path)
+        .webp({ quality: 20 })
+        .toFile(new_path)
+        .then(() => {
+
+          fs.unlink(file_path, (err_file_path) => {
+            if (err_file_path) {
+                throw err_file_path;
+            }
+          });
+
+          final_resolve(new_path);
+        })
+
+    } else {
+      final_resolve(file_path);
+    }
+
+  })
 }

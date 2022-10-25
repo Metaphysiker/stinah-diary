@@ -141,8 +141,6 @@ export class EntryService {
           for (let i = 0; i < data.length; i++) {
             data[i].updatedAt = new Date(data[i].updatedAt);
             data[i].createdAt = new Date(data[i].createdAt);
-            console.log("entry_data");
-            console.log(data);
           }
 
           final_resolve(data);
