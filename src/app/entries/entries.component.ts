@@ -30,7 +30,8 @@ export class EntriesComponent implements OnInit {
   }
 
   addEntry(entry: Entry){
-    this.getEntries();
+    //this.getEntries();
+    this.entries.unshift(entry);
   }
 
   getEntries(){

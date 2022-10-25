@@ -87,6 +87,8 @@ export class AnimalsService {
         })
         .then((response) => response.json())
         .then((data) => {
+          data.updatedAt = new Date(data.updatedAt);
+          data.createdAt = new Date(data.createdAt);
             final_resolve(data);
         });
       })

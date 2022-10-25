@@ -37,9 +37,23 @@ export class AnimalsOverviewComponent implements OnInit {
   isDate(obj: any): boolean { return obj instanceof Date; }
 
   addAnimal(animal: Animal) {
-    this.animalService.getAnimals().then((response: any) => {
 
-      this.animals = response;
+    this.animals.push(animal);
+
+    //this.animalService.getAnimals().then((response: any) => {
+    //  this.animals = response;
+    //});
+  }
+
+  sortAnimalsByName(){
+    this.animals.sort((a: any, b: any) => {
+      return a["name"].toString().localeCompare(b["name"].toString());
+    });
+  }
+
+  sortAnimalsByUpdatedAt(){
+    this.animals.sort((a: any, b: any) => {
+      return b.updatedAt - a.updatedAt;
     });
   }
 

@@ -8,7 +8,7 @@ router.get(
   async (req, res, next) => {
 
     const filter = {};
-    const animals = await AnimalModel.find(filter).sort({'updatedAt': -1});
+    const animals = await AnimalModel.find(filter).collation({ locale: "de", strength: 2 }).sort({'name': 1});
     res.json(animals)
   }
 );

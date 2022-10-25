@@ -3,8 +3,8 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Zuletzt aktualisiert</th>
+      <th scope="col"><button (click)="sortAnimalsByName()" class="btn btn-success">Name</button></th>
+      <th scope="col"><button (click)="sortAnimalsByUpdatedAt()" class="btn btn-success">Zuletzt aktualisiert</button></th>
     </tr>
   </thead>
   <tbody>
@@ -14,7 +14,7 @@
       </td>
       <td>
         <ng-template [ngIf]="animal.updatedAt !== undefined">
-            {{animal.updatedAt.toLocaleDateString("de")}}
+            {{animal.updatedAt.toLocaleDateString("de")}} - {{animal.updatedAt.toLocaleTimeString("de")}}
         </ng-template>
       </td>
     </tr>

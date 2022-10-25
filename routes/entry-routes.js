@@ -35,19 +35,19 @@ router.get(
     //const entries = await EntryModel.find(filter).sort({'createdAt': -1});
 
     var date = req.params.date;
-    console.log("date: " + date);
+    //console.log("date: " + date);
     //var iso_date = ISODate(date);
     //console.log("iso_date: " + iso_date);
 
     var datex = new Date(date);
-    console.log(datex);
+    //console.log(datex);
 
     const startOfDay = new Date(date);
     startOfDay.setUTCHours(0, 0, 0, 0);
-console.log(startOfDay);
+    //console.log(startOfDay);
     const endOfDay = new Date(date);
     endOfDay.setUTCHours(23, 59, 59, 999);
-console.log(endOfDay);
+    //console.log(endOfDay);
 
     const entries = await EntryModel.find({
         createdAt: {
@@ -202,7 +202,7 @@ function create_file(req, entry){
             .then((upload_path2) => {
 
               const filename = path.basename(upload_path2);
-              console.log(filename);
+              //console.log(filename);
 
               var file_filter =  {_id: file._id};
               var new_file_fields = {
@@ -218,8 +218,7 @@ function create_file(req, entry){
                 {
                   new: true
                 }).then((file2) => {
-                  console.log("file2: ");
-                  console.log(file2);
+
                   final_resolve();
                 });
 
