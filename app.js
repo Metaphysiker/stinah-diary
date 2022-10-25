@@ -1,13 +1,13 @@
-//const express = require('express')
-//const app = express()
-//const port = 3000
-
 const express = require('express');
+const multer = require("multer");
 const mongoose = require('mongoose');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const app = express();
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 const UserModel = require('./model/user');
 const AnimalModel = require('./model/animal');
@@ -32,7 +32,6 @@ app.get('/', (req, res) => {
 })
 
 app.use(express.static(__dirname + '/dist/stinah-diary/browser'));
-console.log(__dirname + '/uploads');
 app.use('/uploads', passport.authenticate('jwt-from-parameter', { session: false }), express.static(__dirname + '/uploads'));
 
 app.use(bodyParser.urlencoded({ extended: false }));

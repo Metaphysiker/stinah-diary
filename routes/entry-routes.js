@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require("multer");
 const router = express.Router();
 const EntryModel = require('../model/entry');
 const FileModel = require('../model/file');
@@ -6,6 +7,10 @@ const AnimalModel = require('../model/animal');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
+const sharp = require('sharp');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 
 
@@ -112,6 +117,12 @@ router.post(
     let upload_path;
     let file;
 
+    fs.access(path.join(__dirname, '../uploads/'), (error) => {
+      if (error) {
+        fs.mkdirSync(path.join(__dirname, '../uploads/'));
+      }
+    });
+
     if (!req.files || Object.keys(req.files).length === 0) {
       //console.log('No files were uploaded.');
     } else {
@@ -126,9 +137,11 @@ router.post(
       const animal = await AnimalModel.findOneAndUpdate({ _id: req.body.animal_id }, {updatedAt: new Date()});
 
       if(req.files && req.files.image){
+
         const file = await FileModel.create({});
 
         image = req.files.image
+
         upload_path = path.join(__dirname, '../uploads/' + file._id + "-" + image.name);
 
         image.mv(upload_path, async function(err){
@@ -136,10 +149,15 @@ router.post(
 
           } else {
             //file = await FileModel.create({}); //FileModel.create({name: image.name, entry_id: entry._id});
+
+            await sharp(upload_path)
+              .webp({ quality: 20 })
+              .toFile(path.join(__dirname, '../uploads/' + file._id + ".webp"));
+
             try {
               var entry_filter =  {_id: file._id};
               var new_entry_fields = {
-                          name: file._id + "-" + image.name,
+                          name: file._id + ".webp",
                           entry_id: entry._id
                         };
               const file2 = await FileModel.findOneAndUpdate(

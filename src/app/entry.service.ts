@@ -30,7 +30,8 @@ export class EntryService {
           data.updatedAt = new Date(data.updatedAt);
           data.createdAt = new Date(data.createdAt);
 
-
+          console.log("entry_data");
+          console.log(data);
           final_resolve(data);
         });
       })
@@ -140,6 +141,8 @@ export class EntryService {
           for (let i = 0; i < data.length; i++) {
             data[i].updatedAt = new Date(data[i].updatedAt);
             data[i].createdAt = new Date(data[i].createdAt);
+            console.log("entry_data");
+            console.log(data);
           }
 
           final_resolve(data);
