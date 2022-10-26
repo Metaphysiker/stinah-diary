@@ -28,7 +28,6 @@ router.post(
       };
 
       const options = {
-          vibrate: [500,110,500,110,450,110,200,110,170,40,450,110,200,110,170,40,500],
           vapidDetails: {
               subject: 'mailto:s.raess@me.com',
               publicKey: vapidKeys.publicKey,
