@@ -43,7 +43,7 @@ export class NotificationService {
 
   saveSubscription(subscription: any){
     return new Promise(function(final_resolve, final_reject){
-      console.log(subscription);
+      //console.log(subscription);
 
       let body = new URLSearchParams();
       body.set('endpoint', subscription.endpoint);

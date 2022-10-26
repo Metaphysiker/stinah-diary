@@ -41,6 +41,7 @@ router.post(
           notification: {
               title: req.body.title,
               body: req.body.body,
+              vibrate: [200, 100, 200],
               icon: "https://cdn-icons-png.flaticon.com/512/3449/3449752.png",
               actions: [
                   { action: 'bar', title: 'Focus last' },
