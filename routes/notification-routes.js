@@ -15,9 +15,6 @@ router.post(
       privateKey: process.env.privateKey
     };
 
-    console.log("vapidkeys: ")
-    console.log(vapidKeys);
-
     for await (const doc of NotificationSubscriptionModel.find({})) {
       console.log("inside for await");
 
@@ -29,8 +26,6 @@ router.post(
               p256dh: doc.p256dh,
           },
       };
-      console.log("subscription: ");
-      console.log(subscription);
 
       const options = {
           vapidDetails: {
@@ -41,11 +36,13 @@ router.post(
           TTL: 60,
       };
 
+      console.log(path.join(__dirname, '../src/assets/icons/icon-144x144.png'));
+
       const payload = {
           notification: {
-              title: req.body.tile,
+              title: req.body.title,
               body: req.body.body,
-              icon: 'assets/icons/icon-384x384.png',
+              icon: "https://cdn-icons-png.flaticon.com/512/3449/3449752.png",
               actions: [
                   { action: 'bar', title: 'Focus last' },
                   { action: 'baz', title: 'Navigate last' },
@@ -70,7 +67,7 @@ router.post(
       webpush.sendNotification(subscription, JSON.stringify(payload), options)
           .then((_) => {
               console.log('SENT!!!');
-              console.log(_);
+              //console.log(_);
           })
           .catch((_) => {
               console.log(_);
