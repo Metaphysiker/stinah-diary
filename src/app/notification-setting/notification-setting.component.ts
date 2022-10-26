@@ -30,17 +30,15 @@ export class NotificationSettingComponent implements OnInit {
       console.log("Notification is not enabled.");
       return;
     } else {
-      //this.notification_status = this._swPush.isEnabled;
+      this.notification_status = this._swPush.isEnabled;
     }
 
     console.log("angular request subscription");
     this._swPush.requestSubscription({
       serverPublicKey: 'BB7sJU7TwcojFmgEH9WBNg_OypktnrVro38LSrL_wJHT1oWrh3k_8tw4jcTUVYYSRh-e8BuOLnoKlGVtJSAX2Mc'
     }).then((subscription) => {
-      console.log("subsix: ");
-      console.log(JSON.stringify(subscription));
+
       const subscription_string = JSON.stringify(subscription);
-      //this.notificationService.sendNotification();
       this.notificationService.saveSubscription(JSON.parse(subscription_string));
     }).catch((_) => console.log);
   };
