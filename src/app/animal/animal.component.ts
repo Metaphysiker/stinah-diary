@@ -41,7 +41,7 @@ export class AnimalComponent implements OnInit {
     if(confirm("Bist du sicher?")) {
       this.animalService.deleteAnimal(this.animal._id)
       .then((data: any) => {
-        console.log(data);
+        //console.log(data);
         this.showAnimal = false;
       });
     }

@@ -101,15 +101,15 @@ router.get(
     //const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
 
     EntryModel.
-  findOne(filter).
-  populate('animal').
-  exec(function (err, entry) {
-    if (err) return handleError(err);
+      findOne(filter).
+      populate('animal').
+      exec(function (err, entry) {
+        if (err) return handleError(err);
 
-    const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
+        const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
 
-    res.json(final_response);
-  });
+        res.json(final_response);
+      });
 
     //res.json(final_response)
   }
@@ -128,7 +128,17 @@ router.post(
 
     create_file(req, entry)
       .then(() => {
-        res.json(entry);
+        //res.json(entry);
+
+        EntryModel
+          .findOne({_id: entry._id})
+          .populate('animal')
+          .exec(function (err, entry2) {
+            if (err) return handleError(err);
+
+            res.json(entry2);
+          });
+
       })
       .catch(
         (error) => {

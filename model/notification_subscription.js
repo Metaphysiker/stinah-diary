@@ -14,6 +14,10 @@ const NotificationSubscriptionSchema = new Schema({
   p256dh: {
       type: String,
       required: true
+    },
+    user: {
+      type: Schema.Types.ObjectId, ref: 'user',
+      required: false
     }
 },
 {

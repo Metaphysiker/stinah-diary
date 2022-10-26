@@ -3,6 +3,8 @@ import { FormGroup, FormControl  } from '@angular/forms';
 import { EntryService } from '../entry.service';
 import { Entry } from '../entry';
 import { Animal } from '../animal';
+import { NotificationService } from '../notification.service';
+import { NotificationMessage } from '../notification-message';
 
 
 @Component({
@@ -29,7 +31,8 @@ export class EntryFormComponent implements OnInit {
     });
 
   constructor(
-    private entryService: EntryService
+    private entryService: EntryService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -38,7 +41,7 @@ export class EntryFormComponent implements OnInit {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.log("onSubmit");
+    //console.log("onSubmit");
     //console.log(this.entryForm.value.image);
     //console.log(this.entryForm.value.image.target.files[0]);
 
@@ -56,6 +59,11 @@ export class EntryFormComponent implements OnInit {
       this.addNewEntry(response);
       this.pleaseWait = false;
       this.entryForm.reset();
+      var notification_message: NotificationMessage = {
+              title: response.animal.name,
+              body: response.content
+            };
+      this.sendNotification(notification_message);
     });
   }
 
@@ -71,6 +79,13 @@ export class EntryFormComponent implements OnInit {
         image: file
       });
     }
+  }
+
+  sendNotification(notification_message: NotificationMessage){
+
+    this.notificationService.sendNotification(
+      notification_message
+    );
   }
 
 }

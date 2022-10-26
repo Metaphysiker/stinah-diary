@@ -34,7 +34,7 @@ export class NotificationSettingComponent implements OnInit {
             title: "Test-Nachricht",
             body: "Test Test Test"
           };
-    
+
     this.notificationService.sendNotification(
       notification_message
     );

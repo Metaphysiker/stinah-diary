@@ -35,8 +35,8 @@ export class WelcomeComponent implements OnInit {
         }
       })
       .then((response: any) => {
-        console.log(response);
-        console.log(response.json());
+        //console.log(response);
+        //console.log(response.json());
       })
      })
 

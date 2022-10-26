@@ -3,6 +3,9 @@ import { FormGroup, FormControl  } from '@angular/forms';
 import { AnimalsService } from '../animals.service';
 import { Animal } from '../animal';
 import { Router } from '@angular/router';
+import { NotificationService } from '../notification.service';
+import { NotificationMessage } from '../notification-message';
+
 
 
 @Component({
@@ -19,7 +22,8 @@ export class AnimalFormComponent implements OnInit {
 
   constructor(
     private animalService: AnimalsService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -33,11 +37,23 @@ export class AnimalFormComponent implements OnInit {
       //this.router.navigate(['/animals-overview']);
       this.addNewAnimal(response);
       this.animalForm.reset();
+      var notification_message: NotificationMessage = {
+              title: "Neues Tier",
+              body: response.name
+            };
+      this.sendNotification(notification_message);
     });
   }
 
   addNewAnimal(animal: Animal) {
     this.newAnimalEvent.emit(animal);
+  }
+
+  sendNotification(notification_message: NotificationMessage){
+
+    this.notificationService.sendNotification(
+      notification_message
+    );
   }
 
 }

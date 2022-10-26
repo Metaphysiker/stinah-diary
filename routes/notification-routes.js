@@ -16,6 +16,7 @@ router.post(
     };
 
     for await (const doc of NotificationSubscriptionModel.find({})) {
+       if (doc.user.toString() === req.user_id) { continue; }
       //console.log("inside for await");
 
       const subscription = {
@@ -41,7 +42,7 @@ router.post(
           notification: {
               title: req.body.title,
               body: req.body.body,
-              icon: "https://cdn-icons-png.flaticon.com/512/3449/3449752.png",
+              icon: "/icon-144x144.png",
               actions: [
                   { action: 'bar', title: 'Focus last' },
                   { action: 'baz', title: 'Navigate last' },
@@ -51,11 +52,11 @@ router.post(
                       default: { operation: 'openWindow' },
                       bar: {
                           operation: 'focusLastFocusedOrOpen',
-                          url: '/signin',
+                          url: '/',
                       },
                       baz: {
                           operation: 'navigateLastFocusedOrOpen',
-                          url: '/signin',
+                          url: '/',
                       },
                   },
               },
@@ -73,7 +74,6 @@ router.post(
 
               NotificationSubscriptionModel.deleteOne({ _id: doc._id }, function (err) {
                 if (err) return handleError(err);
-                // deleted at most one tank document
               });
 
           });
