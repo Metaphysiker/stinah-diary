@@ -29,6 +29,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NotificationSettingComponent } from './notification-setting/notification-setting.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     EntriesComponent,
     ImageComponent,
     EntriesOverviewComponent,
-    CalendarComponent
+    CalendarComponent,
+    NotificationSettingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
