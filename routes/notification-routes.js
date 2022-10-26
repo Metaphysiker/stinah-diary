@@ -28,6 +28,7 @@ router.post(
       };
 
       const options = {
+          vibrate: [500,110,500,110,450,110,200,110,170,40,450,110,200,110,170,40,500],
           vapidDetails: {
               subject: 'mailto:s.raess@me.com',
               publicKey: vapidKeys.publicKey,
@@ -41,7 +42,6 @@ router.post(
           notification: {
               title: req.body.title,
               body: req.body.body,
-              vibrate: [200, 100, 200],
               icon: "https://cdn-icons-png.flaticon.com/512/3449/3449752.png",
               actions: [
                   { action: 'bar', title: 'Focus last' },
