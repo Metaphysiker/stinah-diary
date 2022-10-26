@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { NotificationMessage } from './notification-message';
+
 declare const localforage: any;
 
 @Injectable({
@@ -14,12 +16,12 @@ export class NotificationService {
     private http: HttpClient
   ) { }
 
-  sendNotification(){
+  sendNotification(data: NotificationMessage){
     return new Promise(function(final_resolve, final_reject){
 
       let body = new URLSearchParams();
-      body.set('title', "Mein Titel");
-      body.set('body', "Mein Body");
+      body.set('title', data.title);
+      body.set('body', data.body);
 
 
       localforage.getItem("jwt-token")

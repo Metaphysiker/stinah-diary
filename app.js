@@ -40,6 +40,8 @@ app.get('/', (req, res) => {
 
 app.use(express.static(__dirname + '/dist/stinah-diary/browser'));
 app.use('/uploads', passport.authenticate('jwt-from-parameter', { session: false }), express.static(__dirname + '/uploads'));
+app.use(express.static('public'));
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 

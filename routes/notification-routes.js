@@ -16,7 +16,7 @@ router.post(
     };
 
     for await (const doc of NotificationSubscriptionModel.find({})) {
-      console.log("inside for await");
+      //console.log("inside for await");
 
       const subscription = {
           endpoint: doc.endpoint,
@@ -36,7 +36,6 @@ router.post(
           TTL: 60,
       };
 
-      console.log(path.join(__dirname, '../src/assets/icons/icon-144x144.png'));
 
       const payload = {
           notification: {
@@ -66,11 +65,17 @@ router.post(
       // send notification
       webpush.sendNotification(subscription, JSON.stringify(payload), options)
           .then((_) => {
-              console.log('SENT!!!');
+              //console.log('SENT!!!');
               //console.log(_);
           })
           .catch((_) => {
-              console.log(_);
+              //console.log(_);
+
+              NotificationSubscriptionModel.deleteOne({ _id: doc._id }, function (err) {
+                if (err) return handleError(err);
+                // deleted at most one tank document
+              });
+
           });
 
     }
