@@ -30,8 +30,8 @@ export class EntryService {
           data.updatedAt = new Date(data.updatedAt);
           data.createdAt = new Date(data.createdAt);
 
-          console.log("entry_data");
-          console.log(data);
+          //console.log("entry_data");
+          //console.log(data);
           final_resolve(data);
         });
       })

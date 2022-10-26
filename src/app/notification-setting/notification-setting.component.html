@@ -1,10 +1,15 @@
 <div class="container">
+  {{notification_status}}
   <div class="card">
     <div class="card-body">
       <strong>Status: </strong> {{notification_status}}
-      <div *ngIf="notification_status">
+      <button (click)="requestSubscription()" class="btn btn-primary">Request Subscription</button>
+
+      <div *ngIf="!notification_status">
         <button (click)="requestSubscription()" class="btn btn-primary">Request Subscription</button>
       </div>
     </div>
   </div>
+  <button (click)="sendNotification()" class="btn btn-primary">Send Notification</button>
+
 </div>

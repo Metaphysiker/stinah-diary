@@ -6,66 +6,6 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
-const webpush = require('web-push');
-
-const vapidKeys = { // new
-  publicKey: process.env.publicKey,
-  privateKey: process.env.privateKey
-};
-
-// get client subscription config from db
-const subscription = {
-    endpoint: 'https://fcm.googleapis.com/fcm/send/cnJUBK6Pf4k:APA91bHPtEKYLiMsDoWHOBjjcOU1518MLZ6uVQ-z4MQ_GS1oYC7C8Jp8r5svsmKTNRUhyN06118Vt5TeK1pJbtq3i09P6GRWOPUFyp86R7oCH_nzQg3Ahgqxc4JolCs0M_88rLxwVtza',
-    expirationTime: null,
-    keys: {
-        auth: "0jqnbISegSdOBsTCh60DxQ",
-        p256dh: "BEQ4x-PIPezJh9DhV-FtXQ69nmjh5VxvL5SjvQc6rimj-DRzYtrBDBjtT3rLTB8E65OG2cvGc57gMycJggvmbPU",
-    },
-};
-
-const payload = {
-    notification: {
-        title: 'Title',
-        body: 'This is my body',
-        icon: 'assets/icons/icon-384x384.png',
-        actions: [
-            { action: 'bar', title: 'Focus last' },
-            { action: 'baz', title: 'Navigate last' },
-        ],
-        data: {
-            onActionClick: {
-                default: { operation: 'openWindow' },
-                bar: {
-                    operation: 'focusLastFocusedOrOpen',
-                    url: '/signin',
-                },
-                baz: {
-                    operation: 'navigateLastFocusedOrOpen',
-                    url: '/signin',
-                },
-            },
-        },
-    },
-};
-
-const options = {
-    vapidDetails: {
-        subject: 'mailto:example_email@example.com',
-        publicKey: vapidKeys.publicKey,
-        privateKey: vapidKeys.privateKey,
-    },
-    TTL: 60,
-};
-
-// send notification
-webpush.sendNotification(subscription, JSON.stringify(payload), options)
-    .then((_) => {
-        console.log('SENT!!!');
-        console.log(_);
-    })
-    .catch((_) => {
-        console.log(_);
-    });
 
 const app = express();
 
@@ -87,6 +27,10 @@ const routes = require('./routes/routes');
 const secureRoute = require('./routes/secure-routes');
 const animalRoute = require('./routes/animal-routes');
 const entryRoute = require('./routes/entry-routes');
+const notificationRoute = require('./routes/notification-routes');
+const notificationSubscriptionRoute = require('./routes/notification-subscription-routes');
+
+
 
 app.use(fileUpload());
 
@@ -105,6 +49,10 @@ app.use('/', routes);
 app.use('/user', passport.authenticate('jwt', { session: false }), secureRoute);
 app.use('/secure', passport.authenticate('jwt', { session: false }), animalRoute);
 app.use('/secure', passport.authenticate('jwt', { session: false }), entryRoute);
+app.use('/secure', passport.authenticate('jwt', { session: false }), notificationRoute);
+app.use('/secure', passport.authenticate('jwt', { session: false }), notificationSubscriptionRoute);
+
+
 
 
 
