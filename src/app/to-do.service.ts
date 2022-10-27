@@ -41,6 +41,32 @@ export class ToDoService {
     })
   }
 
+  updateToDo(toDo: ToDo){
+    console.log(toDo);
+    return new Promise(function(final_resolve, final_reject){
+
+      let body = new URLSearchParams();
+      body.set('content', toDo.content);
+      body.set('completed', toDo.completed);
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/to_dos/' + toDo._id, {
+          method: "PUT",
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          },
+          body: body,
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            final_resolve(data);
+        });
+      })
+    })
+  }
+
   getToDo(_id: any){
     //console.log("service get To Do");
 

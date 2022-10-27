@@ -1,11 +1,17 @@
 <div class="container">
   <h1>To-Dos</h1>
 
-  <div *ngFor="let toDo of toDos">
+  <div *ngFor="let toDo of uncompletedToDos">
     <app-to-do [input_to_do_id]="toDo._id">
     </app-to-do>
   </div>
 
   <app-to-do-form (newToDoEvent)="addToDo($event)">
   </app-to-do-form>
+
+  <hr>
+  <div *ngFor="let toDo of completedToDos">
+    <app-to-do [input_to_do_id]="toDo._id">
+    </app-to-do>
+  </div>
 </div>

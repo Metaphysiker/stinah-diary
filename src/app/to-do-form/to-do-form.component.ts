@@ -34,7 +34,7 @@ export class ToDoFormComponent implements OnInit {
       completed: "false"
     });
 
-    console.log(this.toDoForm.value as ToDo);
+    //console.log(this.toDoForm.value as ToDo);
 
   this.toDoService.createToDo(this.toDoForm.value as ToDo).then((response: any) => {
       //this.addNewAnimal(response);

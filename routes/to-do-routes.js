@@ -42,6 +42,27 @@ router.post(
   }
 );
 
+router.put(
+  '/to_dos/:id',
+  async (req, res, next) => {
+
+    const filter = {_id: req.params.id};
+    const update = {
+      completed: req.body.completed
+    }
+
+    try {
+      const to_do = await ToDoModel.findOneAndUpdate(filter, update, {
+        new: true
+      });
+      res.json(to_do)
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+);
+
 router.delete('/to_dos/:id',
   async (req, res, next) => {
     const filter = {_id: req.params.id};

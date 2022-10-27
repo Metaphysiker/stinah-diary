@@ -8,10 +8,19 @@
       </div>
     </div>
     <div class="row">
-      <div class="col">
-        {{toDo.completed}}
+      <div class="col-2">
+        <ng-template [ngIf]="toDo.completed=='false'">
+          <button type="button" (click)="checkToDo()" class="btn btn-link">
+            <img src="/assets/svgs/square.svg">
+          </button>
+        </ng-template>
+        <ng-template [ngIf]="toDo.completed=='true'">
+          <button type="button" (click)="unCheckToDo()" class="btn btn-link">
+            <img src="/assets/svgs/check-square.svg">
+          </button>
+        </ng-template>
       </div>
-      <div class="col">
+      <div class="col-10">
         {{toDo.content}}
       </div>
     </div>

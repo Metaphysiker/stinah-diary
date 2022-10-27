@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ToDo } from '../to-do';
 import { ToDoService } from '../to-do.service';
+import { NotificationService } from '../notification.service';
+import { NotificationMessage } from '../notification-message';
 
 @Component({
   selector: 'app-to-do',
@@ -20,7 +22,8 @@ export class ToDoComponent implements OnInit {
   };
 
   constructor(
-    private toDoService: ToDoService
+    private toDoService: ToDoService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -36,8 +39,34 @@ export class ToDoComponent implements OnInit {
     });
   }
 
+  checkToDo(){
+    this.toDo.completed = 'true';
+
+    this.toDoService.updateToDo(this.toDo).then((response: any) => {
+
+        var notification_message: NotificationMessage = {
+                title: "To-Do erledigt",
+                body: response.content
+              };
+        this.sendNotification(notification_message);
+      });
+  }
+
+  unCheckToDo(){
+    this.toDo.completed = 'false';
+
+    this.toDoService.updateToDo(this.toDo).then((response: any) => {
+
+        var notification_message: NotificationMessage = {
+                title: "To-Do erledigt",
+                body: response.content
+              };
+        this.sendNotification(notification_message);
+      });
+  }
+
   deleteToDo(){
-    console.log("delete");
+
     if(confirm("Bist du sicher?")) {
       this.toDoService.deleteToDo(this.toDo._id)
       .then((data: any) => {
@@ -45,6 +74,13 @@ export class ToDoComponent implements OnInit {
         this.showToDo = false;
       });
     }
+  }
+
+  sendNotification(notification_message: NotificationMessage){
+
+    this.notificationService.sendNotification(
+      notification_message
+    );
   }
 
 }

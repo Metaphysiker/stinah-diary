@@ -10,6 +10,9 @@ import { ToDoService } from '../to-do.service';
 export class ToDosComponent implements OnInit {
   toDos: ToDo[] = [];
 
+  uncompletedToDos: ToDo[] = [];
+  completedToDos: ToDo[] = [];
+
   constructor(
     private toDoService: ToDoService,
   ) { }
@@ -22,6 +25,8 @@ export class ToDosComponent implements OnInit {
     this.toDoService.getToDos()
     .then((data: any) => {
       this.toDos = data;
+      this.uncompletedToDos = this.toDos.filter(function(to_do) { return to_do.completed === 'false'; });
+      this.completedToDos = this.toDos.filter(function(to_do) { return to_do.completed === 'true'; });
     });
   }
 
