@@ -41,6 +41,7 @@ router.post(
               title: req.body.title,
               body: req.body.body,
               icon: "/icon-144x144.png",
+              vibrate: [500,110,500,110,450],
               actions: [
                   { action: 'bar', title: 'Focus last' },
                   { action: 'baz', title: 'Navigate last' },
@@ -119,6 +120,7 @@ router.post(
               title: req.body.title,
               body: req.body.body,
               icon: "/icon-144x144.png",
+              vibrate: [500,110,500,110,450],
               actions: [
                   { action: 'bar', title: 'Focus last' },
                   { action: 'baz', title: 'Navigate last' },
