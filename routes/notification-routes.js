@@ -43,7 +43,6 @@ router.post(
               title: req.body.title,
               body: req.body.body,
               icon: "/icon-144x144.png",
-              vibrate: [500,110,500,110,450,110,200,110,170,40,450,110,200,110,170,40,500],
               actions: [
                   { action: 'bar', title: 'Focus last' },
                   { action: 'baz', title: 'Navigate last' },
