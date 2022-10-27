@@ -35,6 +35,7 @@ export class NotificationService {
           body: body,
         })
         .then((response) => {
+          console.log("angular send notification in then");
           final_resolve("");
         });
       })

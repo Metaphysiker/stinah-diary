@@ -57,11 +57,6 @@ export class ToDoComponent implements OnInit {
 
     this.toDoService.updateToDo(this.toDo).then((response: any) => {
 
-        var notification_message: NotificationMessage = {
-                title: "To-Do erledigt",
-                body: response.content
-              };
-        this.sendNotification(notification_message);
       });
   }
 
@@ -77,7 +72,7 @@ export class ToDoComponent implements OnInit {
   }
 
   sendNotification(notification_message: NotificationMessage){
-
+    console.log("angular send notification");
     this.notificationService.sendNotification(
       notification_message
     );
