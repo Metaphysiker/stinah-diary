@@ -30,6 +30,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NotificationSettingComponent } from './notification-setting/notification-setting.component';
+import { ToDoComponent } from './to-do/to-do.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { NotificationSettingComponent } from './notification-setting/notificatio
     ImageComponent,
     EntriesOverviewComponent,
     CalendarComponent,
-    NotificationSettingComponent
+    NotificationSettingComponent,
+    ToDoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
