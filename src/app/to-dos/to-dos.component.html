@@ -2,9 +2,8 @@
   <h1>To-Dos</h1>
 
   <div *ngFor="let toDo of toDos">
-    <p>
-      {{toDo.content}}
-    </p>
+    <app-to-do [input_to_do_id]="toDo._id">
+    </app-to-do>
   </div>
 
   <app-to-do-form (newToDoEvent)="addToDo($event)">

@@ -7,6 +7,10 @@ const ToDoSchema = new Schema({
   content: {
     type: String,
     required: true
+  },
+  completed: {
+    type: String,
+    required: true
   }
 },
 {

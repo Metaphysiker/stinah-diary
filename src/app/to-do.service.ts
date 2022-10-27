@@ -21,6 +21,7 @@ export class ToDoService {
 
       let body = new URLSearchParams();
       body.set('content', toDo.content);
+      body.set('completed', toDo.completed);
 
       localforage.getItem("jwt-token")
       .then((jwt_token: any) => {
@@ -34,8 +35,30 @@ export class ToDoService {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
             final_resolve(data);
+        });
+      })
+    })
+  }
+
+  getToDo(_id: any){
+    //console.log("service get To Do");
+
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/to_dos/' + _id, {
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+          data.updatedAt = new Date(data.updatedAt);
+          data.createdAt = new Date(data.createdAt);
+          final_resolve(data);
         });
       })
     })

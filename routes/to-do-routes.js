@@ -12,14 +12,28 @@ router.get(
   }
 );
 
+router.get(
+  '/to_dos/:id',
+  async (req, res, next) => {
+
+    const filter = {_id: req.params.id};
+    const to_do = await ToDoModel.findOne(filter);
+
+    res.json(to_do)
+  }
+);
+
 router.post(
   '/to_dos',
   async (req, res, next) => {
 
-    //console.log(req);
-
     try {
-      const to_do = await ToDoModel.create({ content: req.body.content });
+      const to_do = await ToDoModel.create(
+        {
+          content: req.body.content,
+          completed: req.body.completed
+        }
+      );
       res.json(to_do)
     } catch (error) {
       console.log(error);

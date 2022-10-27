@@ -16,7 +16,7 @@ router.post(
     };
 
     for await (const doc of NotificationSubscriptionModel.find({})) {
-       if (doc.user.toString() === req.user_id) { continue; }
+       if (doc.user && doc.user.toString() === req.user_id) { continue; }
       //console.log("inside for await");
 
       const subscription = {

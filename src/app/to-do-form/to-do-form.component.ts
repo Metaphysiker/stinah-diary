@@ -14,7 +14,8 @@ export class ToDoFormComponent implements OnInit {
   @Output() newToDoEvent = new EventEmitter<ToDo>();
 
   toDoForm = new FormGroup({
-    content: new FormControl('')
+    content: new FormControl(''),
+    completed: new FormControl('false')
     });
 
   constructor(
@@ -29,6 +30,11 @@ export class ToDoFormComponent implements OnInit {
   onSubmit() {
     // TODO: Use EventEmitter with form value
     //console.warn(this.animalForm.value);
+    this.toDoForm.patchValue({
+      completed: "false"
+    });
+
+    console.log(this.toDoForm.value as ToDo);
 
   this.toDoService.createToDo(this.toDoForm.value as ToDo).then((response: any) => {
       //this.addNewAnimal(response);

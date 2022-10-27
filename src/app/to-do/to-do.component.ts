@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ToDo } from '../to-do';
-
+import { ToDoService } from '../to-do.service';
 
 @Component({
   selector: 'app-to-do',
@@ -9,9 +9,29 @@ import { ToDo } from '../to-do';
 })
 export class ToDoComponent implements OnInit {
 
-  constructor() { }
+  @Input() input_to_do_id = "0";
+
+  toDo: ToDo = {
+    content: "",
+    completed: "",
+    _id: "0"
+  };
+
+  constructor(
+    private toDoService: ToDoService
+  ) { }
 
   ngOnInit(): void {
+    this.getToDo();
+  }
+
+  getToDo(){
+
+    this.toDoService.getToDo(this.input_to_do_id)
+    .then((data: any) => {
+      //console.log(data);
+      this.toDo = data;
+    });
   }
 
 }
