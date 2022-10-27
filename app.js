@@ -29,7 +29,7 @@ const animalRoute = require('./routes/animal-routes');
 const entryRoute = require('./routes/entry-routes');
 const notificationRoute = require('./routes/notification-routes');
 const notificationSubscriptionRoute = require('./routes/notification-subscription-routes');
-
+const toDoRoute = require('./routes/to-do-routes');
 
 
 app.use(fileUpload());
@@ -53,9 +53,7 @@ app.use('/secure', passport.authenticate('jwt', { session: false }), animalRoute
 app.use('/secure', passport.authenticate('jwt', { session: false }), entryRoute);
 app.use('/secure', passport.authenticate('jwt', { session: false }), notificationRoute);
 app.use('/secure', passport.authenticate('jwt', { session: false }), notificationSubscriptionRoute);
-
-
-
+app.use('/secure', passport.authenticate('jwt', { session: false }), toDoRoute);
 
 
 // Handle errors.
