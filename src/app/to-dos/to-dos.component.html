@@ -10,6 +10,7 @@
   </app-to-do-form>
 
   <hr>
+  <h2>Erledigte To-Dos</h2>
   <div *ngFor="let toDo of completedToDos">
     <app-to-do [input_to_do_id]="toDo._id">
     </app-to-do>

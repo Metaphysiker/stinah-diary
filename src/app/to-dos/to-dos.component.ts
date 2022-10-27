@@ -32,6 +32,8 @@ export class ToDosComponent implements OnInit {
 
   addToDo(toDo: ToDo){
     this.toDos.unshift(toDo);
+    this.uncompletedToDos = this.toDos.filter(function(to_do) { return to_do.completed === 'false'; });
+    this.completedToDos = this.toDos.filter(function(to_do) { return to_do.completed === 'true'; });
   }
 
 }
