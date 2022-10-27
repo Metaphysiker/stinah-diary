@@ -1,0 +1,12 @@
+<div class="container">
+  <h1>To-Dos</h1>
+
+  <div *ngFor="let toDo of toDos">
+    <p>
+      {{toDo.content}}
+    </p>
+  </div>
+
+  <app-to-do-form (newToDoEvent)="addToDo($event)">
+  </app-to-do-form>
+</div>

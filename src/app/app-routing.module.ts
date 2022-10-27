@@ -9,6 +9,7 @@ import { EntriesComponent } from './entries/entries.component';
 import { EntriesOverviewComponent } from './entries-overview/entries-overview.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { NotificationSettingComponent } from './notification-setting/notification-setting.component';
+import { ToDosComponent } from './to-dos/to-dos.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'entries-overview', component: EntriesOverviewComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'notification-setting', component: NotificationSettingComponent },
+  { path: 'to-dos', component: ToDosComponent }
 
 ];
 

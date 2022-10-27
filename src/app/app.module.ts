@@ -31,6 +31,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NotificationSettingComponent } from './notification-setting/notification-setting.component';
 import { ToDoComponent } from './to-do/to-do.component';
+import { ToDoFormComponent } from './to-do-form/to-do-form.component';
+import { ToDosComponent } from './to-dos/to-dos.component';
 
 
 @NgModule({
@@ -51,7 +53,9 @@ import { ToDoComponent } from './to-do/to-do.component';
     EntriesOverviewComponent,
     CalendarComponent,
     NotificationSettingComponent,
-    ToDoComponent
+    ToDoComponent,
+    ToDoFormComponent,
+    ToDosComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

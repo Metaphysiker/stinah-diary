@@ -17,6 +17,6 @@ const ToDoSchema = new Schema({
 ToDoSchema.index({content: 'text'});
 
 
-const ToDoModel = mongoose.model('entry', ToDoSchema);
+const ToDoModel = mongoose.model('to-do', ToDoSchema);
 
 module.exports = ToDoModel;
