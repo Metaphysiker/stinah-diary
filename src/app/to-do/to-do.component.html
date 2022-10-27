@@ -1,5 +1,12 @@
-<div class="card">
+<ng-template [ngIf]="showToDo">
+
+<div class="card my-2">
   <div class="card-body">
+    <div class="">
+      <div class="d-flex justify-content-end">
+        <button type="button" (click)="deleteToDo()" class="btn-close" aria-label="delete"></button>
+      </div>
+    </div>
     <div class="row">
       <div class="col">
         {{toDo.completed}}
@@ -10,3 +17,4 @@
     </div>
   </div>
 </div>
+</ng-template>

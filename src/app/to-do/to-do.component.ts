@@ -9,6 +9,8 @@ import { ToDoService } from '../to-do.service';
 })
 export class ToDoComponent implements OnInit {
 
+  showToDo: boolean = true;
+
   @Input() input_to_do_id = "0";
 
   toDo: ToDo = {
@@ -32,6 +34,17 @@ export class ToDoComponent implements OnInit {
       //console.log(data);
       this.toDo = data;
     });
+  }
+
+  deleteToDo(){
+    console.log("delete");
+    if(confirm("Bist du sicher?")) {
+      this.toDoService.deleteToDo(this.toDo._id)
+      .then((data: any) => {
+        //console.log(data);
+        this.showToDo = false;
+      });
+    }
   }
 
 }

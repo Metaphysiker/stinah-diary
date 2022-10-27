@@ -52,5 +52,15 @@ router.delete('/to_dos/:id',
   }
 )
 
+router.delete('/to_dos/:id',
+  async (req, res, next) => {
+    const filter = {_id: req.params.id};
+    ToDoModel.deleteOne(filter, function (err) {
+      if (err) return handleError(err);
+      res.json("to_do_deleted")
+    });
+  }
+)
+
 
 module.exports = router;

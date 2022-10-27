@@ -95,5 +95,27 @@ export class ToDoService {
     })
   }
 
+  deleteToDo(id: any){
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/to_dos/' + id, {
+          method: "DELETE",
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+
+
+          final_resolve("toDo deleted");
+        });
+      })
+    })
+  }
+
 
 }
