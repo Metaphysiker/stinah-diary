@@ -35,7 +35,31 @@ export class NotificationService {
           body: body,
         })
         .then((response) => {
-          console.log("angular send notification in then");
+          final_resolve("");
+        });
+      })
+    })
+  }
+
+  sendTestNotification(data: NotificationMessage){
+    return new Promise(function(final_resolve, final_reject){
+
+      let body = new URLSearchParams();
+      body.set('title', data.title);
+      body.set('body', data.body);
+
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/notifications/send_notification/test', {
+          method: "POST",
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          },
+          body: body,
+        })
+        .then((response) => {
           final_resolve("");
         });
       })

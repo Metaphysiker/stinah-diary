@@ -35,7 +35,7 @@ export class NotificationSettingComponent implements OnInit {
             body: "Test Test Test"
           };
 
-    this.notificationService.sendNotification(
+    this.notificationService.sendTestNotification(
       notification_message
     );
   }
