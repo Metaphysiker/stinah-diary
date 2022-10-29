@@ -3,6 +3,9 @@ import { SwPush } from "@angular/service-worker";
 import { NotificationService } from '../notification.service';
 import { NotificationMessage } from '../notification-message';
 
+import { EmailerService } from '../emailer.service';
+
+
 @Component({
   selector: 'app-notification-setting',
   templateUrl: './notification-setting.component.html',
@@ -14,7 +17,8 @@ export class NotificationSettingComponent implements OnInit {
 
   constructor(
     private _swPush: SwPush,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private emailerService: EmailerService
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +30,12 @@ export class NotificationSettingComponent implements OnInit {
         this.does_subscription_exists = false;
       }
     });
+  }
+
+  sendEmail(){
+    this.emailerService.sendEmail(
+      "1"
+    );
   }
 
   sendNotification(){
