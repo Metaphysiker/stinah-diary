@@ -7,7 +7,7 @@ const ExtractJWT = require('passport-jwt').ExtractJwt;
 passport.use(
   new JWTstrategy(
     {
-      secretOrKey: 'TOP_SECRET',
+      secretOrKey: process.env.jwtSecret,
       jwtFromRequest: ExtractJWT.fromAuthHeaderWithScheme("jwt")//ExtractJWT.fromUrlQueryParameter('secret_token')
     },
     async (token, done) => {
@@ -24,7 +24,7 @@ passport.use(
   'jwt-from-parameter',
   new JWTstrategy(
     {
-      secretOrKey: 'TOP_SECRET',
+      secretOrKey: process.env.jwtSecret,
       jwtFromRequest: ExtractJWT.fromUrlQueryParameter('jwt-token')
     },
     async (token, done) => {

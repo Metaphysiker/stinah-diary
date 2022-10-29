@@ -9,7 +9,7 @@ declare const localforage: any;
 })
 export class WelcomeComponent implements OnInit {
 
-  show_login: String = "unclear";
+  show_login: String = "yes";
 
   secret_message: String = "nothing";
 
@@ -23,7 +23,7 @@ export class WelcomeComponent implements OnInit {
       } else if (response.length === 0){
         this.show_login = "yes";
       } else {
-        this.show_login = "no";
+        //this.show_login = "no";
       }
     });
 
@@ -35,9 +35,19 @@ export class WelcomeComponent implements OnInit {
         }
       })
       .then((response: any) => {
-        //console.log(response);
+
+        if(response.status!==200)
+         {
+           this.show_login = "yes";
+
+         } else {
+           this.show_login = "no";
+         }
         //console.log(response.json());
       })
+      .catch((error) => {
+          this.show_login = "yes";
+        })
      })
 
 
