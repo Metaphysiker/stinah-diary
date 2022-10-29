@@ -35,4 +35,44 @@ export class EmailerService {
     })
   }
 
+  sendTestEmail(){
+    //console.log("service get To Do");
+
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/emailer/send_test_email', {
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => {
+          final_resolve(response);
+        })
+      })
+    })
+  }
+
+  sendDailyUpdateEmails(){
+    //console.log("service get To Do");
+
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/emailer/daily_update', {
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => {
+          final_resolve(response);
+        })
+      })
+    })
+  }
+
 }

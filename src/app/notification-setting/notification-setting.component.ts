@@ -33,9 +33,11 @@ export class NotificationSettingComponent implements OnInit {
   }
 
   sendEmail(){
-    this.emailerService.sendEmail(
-      "1"
-    );
+    this.emailerService.sendTestEmail();
+  }
+
+  sendDailyUpdateEmails(){
+    this.emailerService.sendDailyUpdateEmails();
   }
 
   sendNotification(){

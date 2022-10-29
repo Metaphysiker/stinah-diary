@@ -12,6 +12,7 @@ db.files.find({}).forEach(function(file){
 )});
 
 
+db.users.updateOne({email: "s.raess@me.com"}, {$set: {get_daily_update: "true"}})
 
 
 

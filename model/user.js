@@ -12,6 +12,11 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true
+  },
+  get_daily_updates: {
+    type: String,
+    default: "false",
+    required: false
   }
 });
 
