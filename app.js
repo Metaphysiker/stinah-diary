@@ -31,6 +31,7 @@ const notificationRoute = require('./routes/notification-routes');
 const notificationSubscriptionRoute = require('./routes/notification-subscription-routes');
 const toDoRoute = require('./routes/to-do-routes');
 const emailerRoute = require('./routes/emailer-routes');
+const userRoute = require('./routes/user-routes');
 
 
 app.use(fileUpload());
@@ -56,6 +57,8 @@ app.use('/secure', passport.authenticate('jwt', { session: false }), notificatio
 app.use('/secure', passport.authenticate('jwt', { session: false }), notificationSubscriptionRoute);
 app.use('/secure', passport.authenticate('jwt', { session: false }), toDoRoute);
 app.use('/secure', passport.authenticate('jwt', { session: false }), emailerRoute);
+app.use('/secure', passport.authenticate('jwt', { session: false }), userRoute);
+
 
 
 // Handle errors.

@@ -33,6 +33,7 @@ import { NotificationSettingComponent } from './notification-setting/notificatio
 import { ToDoComponent } from './to-do/to-do.component';
 import { ToDoFormComponent } from './to-do-form/to-do-form.component';
 import { ToDosComponent } from './to-dos/to-dos.component';
+import { UserFormComponent } from './user-form/user-form.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { ToDosComponent } from './to-dos/to-dos.component';
     NotificationSettingComponent,
     ToDoComponent,
     ToDoFormComponent,
-    ToDosComponent
+    ToDosComponent,
+    UserFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

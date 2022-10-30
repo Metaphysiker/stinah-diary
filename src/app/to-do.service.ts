@@ -42,7 +42,7 @@ export class ToDoService {
   }
 
   updateToDo(toDo: ToDo){
-    console.log(toDo);
+    //console.log(toDo);
     return new Promise(function(final_resolve, final_reject){
 
       let body = new URLSearchParams();
