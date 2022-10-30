@@ -5,22 +5,17 @@ const UserModel = require('../model/user');
 const EntryModel = require('../model/entry');
 
 
-
 router.get(
   '/emailer/daily_update',
   async (req, res, next) => {
-    console.log("daily update");
+    //console.log("daily update");
 
     const filter = {};
     //const users = await UserModel.find(filter);
 
     for await (const doc of UserModel.find(filter)) {
-      console.log("doc: ");
-      console.log(doc);
 
-      console.log(doc.get_daily_updates);
-
-      if(doc.get_daily_updates && doc.get.get_daily_updates === "true"){
+      if(doc.get_daily_updates && doc.get_daily_updates === "true"){
         send_daily_update_email(doc);
       }
 
@@ -70,9 +65,9 @@ async function send_test_email(user){
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sandro Räss 👻" <sandro.raess@philosophie.ch>', // sender address
+    from: '"Sandro Räss" <sandro.raess@philosophie.ch>', // sender address
     to: user.email, // list of receivers
-    subject: "Test-Email 👻", // Subject line
+    subject: "Test-Email", // Subject line
     text: "Test Test Test", // plain text body
     html: "<b>Test Test Test?</b>", // html body
   });
@@ -80,13 +75,31 @@ async function send_test_email(user){
 }
 
 async function generate_html_for_daily_update_email(entries){
-  var html_string = "";
+  var html_string = "<b>Daily Update</b><br><br>";
 
   for await (const doc of entries) {
     html_string = html_string + `
+    <b>${doc.animal.name}</b>
     <br>
     ${doc.content}
     <br>
+    <br>
+    `
+  }
+
+  return html_string;
+
+}
+
+async function generate_text_for_daily_update_email(entries){
+  var html_string = "Daily Update\n\n";
+
+  for await (const doc of entries) {
+    html_string = html_string + `
+    ${doc.animal.name}
+    \n
+    ${doc.content}
+    \n\n
     `
   }
 
@@ -96,10 +109,10 @@ async function generate_html_for_daily_update_email(entries){
 
 async function get_todays_activities(){
 
-  const startOfDay = new Date(date);
+  const startOfDay = new Date();
   startOfDay.setUTCHours(0, 0, 0, 0);
 
-  const endOfDay = new Date(date);
+  const endOfDay = new Date();
   endOfDay.setUTCHours(23, 59, 59, 999);
 
   const entries = await EntryModel.find({
@@ -107,7 +120,7 @@ async function get_todays_activities(){
           $gte: startOfDay,
           $lt: endOfDay
       }
-  })
+  }).populate('animal');
 
   return entries;
 
@@ -115,10 +128,11 @@ async function get_todays_activities(){
 
 
 async function send_daily_update_email(user){
-  console.log("send_daily_update_email");
+  //console.log("send_daily_update_email");
 
   const entries_today = await get_todays_activities();
   const html_string = await generate_html_for_daily_update_email(entries_today);
+  const text_string = await generate_text_for_daily_update_email(entries_today);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
@@ -133,10 +147,10 @@ async function send_daily_update_email(user){
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Sandro Räss 👻" <sandro.raess@philosophie.ch>', // sender address
+    from: '"Sandro Räss" <sandro.raess@philosophie.ch>', // sender address
     to: user.email, // list of receivers
-    subject: "Test-Email 👻", // Subject line
-    text: "Test Test Test", // plain text body
+    subject: "Stinah-Diary - Daily Update", // Subject line
+    text: text_string, // plain text body
     html: html_string, // html body
   });
 
