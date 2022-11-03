@@ -31,10 +31,11 @@ export class ToDosComponent implements OnInit {
         this.getToDosByCategory();
         this.category_translated = this.translateCategory(this.category);
       } else {
+        this.category = "work";
         this.getToDosByCategory();
         this.category_translated = this.translateCategory(this.category);
       }
-      
+
     });
 
 

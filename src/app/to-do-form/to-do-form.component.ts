@@ -27,11 +27,11 @@ export class ToDoFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.category);
     this.toDoForm.patchValue({
       category: this.category
     });
   }
+
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
@@ -46,6 +46,9 @@ export class ToDoFormComponent implements OnInit {
       //this.addNewAnimal(response);
       this.addNewToDo(response);
       this.toDoForm.reset();
+      this.toDoForm.patchValue({
+        category: this.category
+      });
 
       var notification_message: NotificationMessage = {
               title: "Neues To-Do",
