@@ -6,13 +6,6 @@
         <input type="text" formControlName="content" class="form-control" id="content" aria-describedby="content">
       </div>
 
-      <div class="mb-3">
-        <label for="content" class="form-label">Kategorie</label>
-        <input type="text" formControlName="category" class="form-control" id="content" aria-describedby="content">
-      </div>
       <button type="submit" [disabled]="!toDoForm.valid" class="btn btn-primary">Eintragen</button>
     </form>
-    <p>
-      Params: {{category}}
-    </p>
   </div>
