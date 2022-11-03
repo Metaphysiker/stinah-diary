@@ -18,6 +18,7 @@ export class ToDoComponent implements OnInit {
   toDo: ToDo = {
     content: "",
     completed: "",
+    category: "",
     _id: "0"
   };
 

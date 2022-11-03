@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'entries-overview', component: EntriesOverviewComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'notification-setting', component: NotificationSettingComponent },
+  { path: 'to-dos/:category', component: ToDosComponent },
   { path: 'to-dos', component: ToDosComponent }
 
 ];

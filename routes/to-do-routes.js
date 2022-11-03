@@ -23,6 +23,17 @@ router.get(
   }
 );
 
+router.get(
+  '/to_dos/category/:category',
+  async (req, res, next) => {
+
+    const filter = {category: req.params.category};
+    const to_do = await ToDoModel.find(filter);
+
+    res.json(to_do)
+  }
+);
+
 router.post(
   '/to_dos',
   async (req, res, next) => {
@@ -31,7 +42,8 @@ router.post(
       const to_do = await ToDoModel.create(
         {
           content: req.body.content,
-          completed: req.body.completed
+          completed: req.body.completed,
+          category: req.body.category
         }
       );
       res.json(to_do)

@@ -11,6 +11,11 @@ const ToDoSchema = new Schema({
   completed: {
     type: String,
     required: true
+  },
+  category: {
+    type: String,
+    default: "work",
+    required: true
   }
 },
 {

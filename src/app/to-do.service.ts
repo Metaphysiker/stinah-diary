@@ -22,6 +22,7 @@ export class ToDoService {
       let body = new URLSearchParams();
       body.set('content', toDo.content);
       body.set('completed', toDo.completed);
+      body.set('category', toDo.category);
 
       localforage.getItem("jwt-token")
       .then((jwt_token: any) => {
@@ -48,6 +49,7 @@ export class ToDoService {
       let body = new URLSearchParams();
       body.set('content', toDo.content);
       body.set('completed', toDo.completed);
+      body.set('category', toDo.category);
 
       localforage.getItem("jwt-token")
       .then((jwt_token: any) => {
@@ -99,6 +101,36 @@ export class ToDoService {
       .then((jwt_token: any) => {
 
         fetch('/secure/to_dos', {
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+          for (let i = 0; i < data.length; i++) {
+            data[i].updatedAt = new Date(data[i].updatedAt);
+            data[i].createdAt = new Date(data[i].createdAt);
+          }
+
+          for (let i = 0; i < data.entries.length; i++) {
+            data.entries[i].updatedAt = new Date(data.entries[i].updatedAt);
+            data.entries[i].createdAt = new Date(data.entries[i].createdAt);
+          }
+
+          final_resolve(data);
+        });
+      })
+    })
+  }
+
+  getToDosByCategory(category: string){
+
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/to_dos/category/' + category, {
           headers: {
             'Authorization': 'JWT ' +jwt_token
           }

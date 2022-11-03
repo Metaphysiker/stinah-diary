@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormControl  } from '@angular/forms';
 import { ToDo } from '../to-do';
 import { ToDoService } from '../to-do.service';
@@ -12,10 +12,12 @@ import { NotificationMessage } from '../notification-message';
 })
 export class ToDoFormComponent implements OnInit {
   @Output() newToDoEvent = new EventEmitter<ToDo>();
+  @Input() category = "work";
 
   toDoForm = new FormGroup({
     content: new FormControl(''),
-    completed: new FormControl('false')
+    completed: new FormControl('false'),
+    category: new FormControl('')
     });
 
   constructor(
@@ -25,6 +27,10 @@ export class ToDoFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.category);
+    this.toDoForm.patchValue({
+      category: this.category
+    });
   }
 
   onSubmit() {

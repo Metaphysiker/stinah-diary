@@ -1,16 +1,15 @@
 <div class="container">
-  <h1>To-Dos</h1>
-
+  <h1>{{category_translated}}</h1>
   <div *ngFor="let toDo of uncompletedToDos">
     <app-to-do [input_to_do_id]="toDo._id">
     </app-to-do>
   </div>
 
-  <app-to-do-form (newToDoEvent)="addToDo($event)">
+  <app-to-do-form (newToDoEvent)="addToDo($event)" [category]="category">
   </app-to-do-form>
 
   <hr>
-  <h2>Erledigte To-Dos</h2>
+  <h2>Erledigt</h2>
   <div *ngFor="let toDo of completedToDos">
     <app-to-do [input_to_do_id]="toDo._id">
     </app-to-do>
