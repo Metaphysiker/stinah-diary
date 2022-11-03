@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl  } from '@angular/forms';
 import { ToDo } from '../to-do';
 import { ToDoService } from '../to-do.service';
@@ -27,6 +27,12 @@ export class ToDoFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.toDoForm.patchValue({
+      category: this.category
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
     this.toDoForm.patchValue({
       category: this.category
     });
