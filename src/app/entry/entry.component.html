@@ -8,7 +8,7 @@
       <div class="d-flex d-flex justify-content-between">
         <ng-template [ngIf]="entry.updatedAt">
           <div class="d-flex justify-content-start">
-              <strong>Datum: </strong> {{entry.updatedAt.toLocaleDateString("de")}} - {{entry.updatedAt.toLocaleTimeString("de")}}
+              <strong class="mr-2">Datum: </strong> {{entry.updatedAt.toLocaleDateString("de", { timeZone: 'UTC'})}} - {{entry.updatedAt.toLocaleTimeString("de")}}
           </div>
         </ng-template>
         <div class="d-flex justify-content-end">

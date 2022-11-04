@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1667560639305,
+  "timestamp": 1667571703410,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.ef52a3b1be62857a.js",
+        "/main.feb9dc3d2ebacfc4.js",
         "/manifest.webmanifest",
         "/polyfills.bb3252282a534d34.js",
         "/runtime.5cf7720e154003a3.js",
@@ -36,6 +36,8 @@
         "/assets/icons/icon-512x512.png",
         "/assets/icons/icon-72x72.png",
         "/assets/icons/icon-96x96.png",
+        "/assets/svgs/arrow-left.svg",
+        "/assets/svgs/arrow-right.svg",
         "/assets/svgs/bag.svg",
         "/assets/svgs/bell.svg",
         "/assets/svgs/calendar-week.svg",
@@ -62,6 +64,8 @@
     "/assets/icons/icon-512x512.png": "281488b5fb4afbcd29045f36d6690d7b39d88d5b",
     "/assets/icons/icon-72x72.png": "dffe990939a1d64c045d08fea9ae15767a4f6d18",
     "/assets/icons/icon-96x96.png": "7e7283adca2e0fac6941f8582c0a25a582076862",
+    "/assets/svgs/arrow-left.svg": "481691c21e43aace44d964c901c7ef4605ba5a1e",
+    "/assets/svgs/arrow-right.svg": "200795cca895c53723a0f4f1feef21922daa8e8b",
     "/assets/svgs/bag.svg": "90bccf525fe5fb12baa3c505b9fff80fc3171aad",
     "/assets/svgs/bell.svg": "e5ad7e55bbb8a7226d144d0b38505f08e78a3395",
     "/assets/svgs/calendar-week.svg": "1a4788a48eb537ac96ac44238a9703bcf4b7ab4c",
@@ -77,8 +81,8 @@
     "/assets/svgs/square.svg": "1243d88c82ebba9687242f63c81475eec6d92367",
     "/assets/svgs/ui-checks.svg": "471f79d6f647c320c940484ab5440eb076049967",
     "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/index.html": "1a41f36fec73bcc8d401f9312fbd2d3d6cdd1d8a",
-    "/main.ef52a3b1be62857a.js": "cfbba5eafc5fa1346a0a1c35c8d90d628d51c9d1",
+    "/index.html": "98a948f3c0a177f52200ef108091b76c296dd856",
+    "/main.feb9dc3d2ebacfc4.js": "19cd181b7eb8ce8b523247cc8cd275d859b5cc41",
     "/manifest.webmanifest": "945fb5208902122d6d77ef47f901f9565eee5581",
     "/polyfills.bb3252282a534d34.js": "d85775be3bf47565c9299381e7117c46f5236cb2",
     "/runtime.5cf7720e154003a3.js": "e8591ad8ca59a7c8aa851e22f6a786110980ea75",

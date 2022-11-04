@@ -125,6 +125,30 @@ export class EntryService {
     })
   }
 
+  getEntriesForCalendar(date: any){
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/entries/calendar/' + date, {
+          headers: {
+            'Authorization': 'JWT ' +jwt_token
+          }
+        })
+        .then((response) => response.json())
+        .then((data: any) => {
+          for (let i = 0; i < data.length; i++) {
+            data[i].updatedAt = new Date(data[i].updatedAt);
+            data[i].createdAt = new Date(data[i].createdAt);
+          }
+
+          final_resolve(data);
+        });
+      })
+    })
+  }
+
   getEntriesOfAnimal(animal_id: any){
     return new Promise(function(final_resolve, final_reject){
 

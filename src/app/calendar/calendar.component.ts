@@ -12,14 +12,13 @@ export class CalendarComponent implements OnInit {
 
   weeks: any[] = [];
   all_days: Date[] = [];
-  selected_date: any = null;
 
-
-  today_date = new Date();
+  //today_date = new Date();
+  selected_date = new Date();
   //today_date = new Date(Date.UTC(Year, Month, Day, Hour, Minute, Second));
 
-  firstDayOfMonth = new Date(this.today_date.getFullYear(), this.today_date.getMonth(), 1);
-  lastDayOfMonth = new Date(this.today_date.getFullYear(), this.today_date.getMonth() + 1, 0);
+  firstDayOfMonth: any;
+  lastDayOfMonth: any;
 
   firstDay: any;
   lastDay: any;
@@ -32,28 +31,21 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("datings:")
-    console.log(this.firstDayOfMonth);
-    console.log(this.lastDayOfMonth);
-
-
-    this.firstDay = this.getFirstDayOfWeek(this.firstDayOfMonth);
-    this.lastDay = this.getLastDayOfWeek(this.lastDayOfMonth);
-    console.log("edge dates: ")
-    console.log(this.firstDay);
-    console.log(this.lastDay);
-    console.log("out");
-    this.fillCalendarWithDates();
-    this.fillWeeks();
-
 
     this.date.setValue(new Date().toLocaleDateString('en-CA'));
-    this.getEntriesByDate();
+    this.loadCalendar();
   }
 
-  getEntriesByDate(){
+  loadCalendar(){
+    this.setDaysForCalendar();
+    this.getEntriesForCalendar();
+    this.fillWeeks();
+  }
 
-    this.entryService.getEntriesByDate(this.date.value)
+
+  getEntriesForCalendar(){
+
+    this.entryService.getEntriesForCalendar(this.selected_date.toUTCString())
     .then((data: any) => {
       this.entries = data;
     });
@@ -64,7 +56,7 @@ export class CalendarComponent implements OnInit {
   getFirstDayOfWeek(d: any) {
     const date = new Date(d);
     const day = date.getDay();
-    const diff = date.getDate() - day + 1;
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1);
 
     return new Date(date.setDate(diff));
   }
@@ -78,6 +70,7 @@ export class CalendarComponent implements OnInit {
   }
 
   fillCalendarWithDates(){
+    this.all_days = [];
     let loop = new Date(this.firstDay);
     while (loop <= this.lastDay) {
       console.log(loop);
@@ -101,6 +94,40 @@ export class CalendarComponent implements OnInit {
       }
     }
 
+  }
+
+  setDaysForCalendar(){
+
+    this.firstDayOfMonth = new Date(this.selected_date.getFullYear(), this.selected_date.getMonth(), 1);
+    this.lastDayOfMonth = new Date(this.selected_date.getFullYear(), this.selected_date.getMonth() + 1, 0);
+
+    this.firstDay = this.getFirstDayOfWeek(this.firstDayOfMonth);
+    this.lastDay = this.getLastDayOfWeek(this.lastDayOfMonth);
+
+    this.all_days = [];
+    this.weeks = [];
+    let loop = new Date(this.firstDay);
+    while (loop <= this.lastDay) {
+      console.log(loop);
+      this.all_days.push(loop);
+      let newDate = loop.setDate(loop.getDate() + 1);
+
+      loop = new Date(newDate);
+    }
+
+
+  }
+
+  getPreviousMonth(){
+    console.log("previous");
+    this.selected_date = new Date(this.selected_date.getFullYear(), this.selected_date.getMonth()-1,1);
+    this.loadCalendar();
+  }
+
+  getNextMonth(){
+    console.log("next");
+    this.selected_date = new Date(this.selected_date.getFullYear(), this.selected_date.getMonth()+1,1);
+    this.loadCalendar();
   }
 
   selectDate(date: any){

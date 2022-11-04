@@ -61,6 +61,48 @@ router.get(
 );
 
 router.get(
+  '/entries/calendar/:date',
+  async (req, res, next) => {
+
+    //const filter = {};
+    //const entries = await EntryModel.find(filter).sort({'createdAt': -1});
+
+    var date = new Date(req.params.date);
+    //console.log("date: " + date);
+    //var iso_date = ISODate(date);
+    //console.log("iso_date: " + iso_date);
+
+    //var datex = new Date(date);
+    //console.log(datex);
+
+    //const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    //const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+    //const firstDay = getFirstDayOfWeek(firstDayOfMonth);
+    //const lastDay = getLastDayOfWeek(lastDayOfMonth);
+
+    const firstDay = new Date(Date.UTC(date.getFullYear(), date.getMonth(), 1));
+    const lastDay = new Date(Date.UTC(date.getFullYear(), date.getMonth() + 1, 0));
+
+    //console.log(firstDay);
+    //console.log(lastDay);
+
+    firstDay.setUTCHours(0, 0, 0, 0);
+    lastDay.setUTCHours(23, 59, 59, 999);
+    //console.log(endOfDay);
+
+    const entries = await EntryModel.find({
+        createdAt: {
+            $gte: firstDay,
+            $lt: lastDay
+        }
+    })
+
+    res.json(entries)
+  }
+);
+
+router.get(
   '/entries/search/',
   async (req, res, next) => {
 
@@ -280,4 +322,20 @@ function compress_image(file_path){
     }
 
   })
+}
+
+function getFirstDayOfWeek(d) {
+  const date = new Date(d);
+  const day = date.getDay();
+  const diff = date.getDate() - day + 1;
+
+  return new Date(date.setDate(diff));
+}
+
+function getLastDayOfWeek(d) {
+  const date = new Date(d);
+  const day = date.getDay();
+  const diff = date.getDate() - day + 7;
+
+  return new Date(date.setDate(diff));
 }

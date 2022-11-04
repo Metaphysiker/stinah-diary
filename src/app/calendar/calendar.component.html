@@ -1,7 +1,25 @@
-<div class="container">
+<div class="container-fluid">
   <h1>Kalender</h1>
 
+<div class="text-center">
+  <div class="row my-3">
+    <div class="col">
+      <button class="btn btn-primary" (click)="getPreviousMonth()">
+        <img src="/assets/svgs/arrow-left.svg">
+       </button>
 
+    </div>
+    <div class="col">
+      {{selected_date.toLocaleString("de", { month: "long" })}} {{selected_date.getFullYear()}}
+    </div>
+    <div class="col">
+      <button class="btn btn-primary" (click)="getNextMonth()">
+        <img src="/assets/svgs/arrow-right.svg">
+       </button>
+
+    </div>
+  </div>
+</div>
 <table class="table table-bordered text-center">
 <thead>
   <tr>
@@ -16,15 +34,18 @@
 </thead>
 <tbody>
   <tr *ngFor="let week of weeks">
-    <td *ngFor="let date of week" [ngClass]="{'table-danger' : date.booking_status == 'fully_booked', 'table-success' : date.booking_status == 'free', 'table-warning' : date.booking_status == 'partially_booked'}"
+    <td *ngFor="let date of week" [ngClass]="{'table-secondary' : date.getUTCMonth() != selected_date.getUTCMonth(), 'table-success' : date.booking_status == 'free', 'table-warning' : date.booking_status == 'partially_booked'}"
     (click)="selectDate(date)"
     >
+    {{date.getUTCMonth()}} - {{selected_date.getUTCMonth()}}
+    <br>
       {{date.getUTCDate()}}
     </td>
   </tr>
 </tbody>
 </table>
 
+  <!--
     <div class="mb-3">
       <label for="start">
         Datum auswählen:
@@ -35,7 +56,7 @@
     </div>
 
     <button (click)="getEntriesByDate()" class="btn btn-primary">Suchen</button>
-
+    -->
 
     <div *ngFor="let entry of entries">
       <ng-template [ngIf]="entry._id !== undefined">
