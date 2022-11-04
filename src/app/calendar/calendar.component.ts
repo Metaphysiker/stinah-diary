@@ -120,13 +120,13 @@ export class CalendarComponent implements OnInit {
 
   getPreviousMonth(){
     console.log("previous");
-    this.selected_date = new Date(this.selected_date.getFullYear(), this.selected_date.getMonth()-1,1);
+    this.selected_date = new Date(Date.UTC(this.selected_date.getFullYear(), this.selected_date.getMonth()-1,1));
     this.loadCalendar();
   }
 
   getNextMonth(){
     console.log("next");
-    this.selected_date = new Date(this.selected_date.getFullYear(), this.selected_date.getMonth()+1,1);
+    this.selected_date = new Date(Date.UTC(this.selected_date.getFullYear(), this.selected_date.getMonth()+1,1));
     this.loadCalendar();
   }
 

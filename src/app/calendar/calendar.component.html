@@ -37,8 +37,6 @@
     <td *ngFor="let date of week" [ngClass]="{'table-secondary' : date.getUTCMonth() != selected_date.getUTCMonth(), 'table-success' : date.booking_status == 'free', 'table-warning' : date.booking_status == 'partially_booked'}"
     (click)="selectDate(date)"
     >
-    {{date.getUTCMonth()}} - {{selected_date.getUTCMonth()}}
-    <br>
       {{date.getUTCDate()}}
     </td>
   </tr>
