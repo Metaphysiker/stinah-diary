@@ -37,19 +37,28 @@ export class CalendarComponent implements OnInit {
   }
 
   loadCalendar(){
+    this.getEntriesForCalendar()
+    .then((data)=> {
+      
+    })
+
     this.setDaysForCalendar();
-    this.getEntriesForCalendar();
+
     this.fillWeeks();
   }
 
 
   getEntriesForCalendar(){
 
-    this.entryService.getEntriesForCalendar(this.selected_date.toUTCString())
-    .then((data: any) => {
-      this.entries = data;
-    });
+    return new Promise(function(final_resolve, final_reject){
 
+      this.entryService.getEntriesForCalendar(this.selected_date.toUTCString())
+      .then((data: any) => {
+        this.entries = data;
+        final_resolve(data);
+      });
+
+    })
 
   }
 
@@ -102,9 +111,13 @@ export class CalendarComponent implements OnInit {
   }
 
   checkIfEntryExistsOnThisDate(date: any){
-    console.log("checkIfEntryExistsOnThisDate");
+    console.log("checkIfEntryExistsOnThisDatexxx");
     console.log(date);
+
     for (let i = 0; i < this.entries.length; i++) {
+
+      console.log(this.entries[i]?.createdAt?.getFullYear());
+      console.log(this.selected_date.getFullYear());
 
       if (
           this.entries[i]?.createdAt?.getFullYear() === this.selected_date.getFullYear() &&
@@ -121,24 +134,32 @@ export class CalendarComponent implements OnInit {
 
   setDaysForCalendar(){
 
-    this.firstDayOfMonth = new Date(this.selected_date.getFullYear(), this.selected_date.getMonth(), 1);
-    this.lastDayOfMonth = new Date(this.selected_date.getFullYear(), this.selected_date.getMonth() + 1, 0);
+    return new Promise(function(final_resolve, final_reject){
+      this.firstDayOfMonth = new Date(this.selected_date.getFullYear(), this.selected_date.getMonth(), 1);
+      this.lastDayOfMonth = new Date(this.selected_date.getFullYear(), this.selected_date.getMonth() + 1, 0);
 
-    this.firstDay = this.getFirstDayOfWeek(this.firstDayOfMonth);
-    this.lastDay = this.getLastDayOfWeek(this.lastDayOfMonth);
+      this.firstDay = this.getFirstDayOfWeek(this.firstDayOfMonth);
+      this.lastDay = this.getLastDayOfWeek(this.lastDayOfMonth);
 
-    this.all_days = [];
-    this.weeks = [];
+      this.all_days = [];
+      this.weeks = [];
 
-    let loop = new Date(this.firstDay);
-    while (loop <= this.lastDay) {
-      console.log(loop);
-      this.all_days.push(loop);
-      let newDate = loop.setDate(loop.getDate() + 1);
+      let loop = new Date(this.firstDay);
 
-      loop = new Date(newDate);
-    }
+      while (loop <= this.lastDay) {
+        console.log(loop);
+        this.all_days.push(loop);
+        let newDate = loop.setDate(loop.getDate() + 1);
 
+        loop = new Date(newDate);
+
+        if(newDate <= this.lastDay){
+          final_resolve("");
+        }
+
+      }
+
+    })
 
   }
 
