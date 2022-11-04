@@ -87,13 +87,36 @@ export class CalendarComponent implements OnInit {
 
     for (let i = 0; i < this.all_days.length; i++) {
 
-      week.push(this.all_days[i]);
+      var calendar_date = {
+        date: this.all_days[i],
+        entries_exist: this.checkIfEntryExistsOnThisDate(this.all_days[i])
+      }
+
+      week.push(calendar_date);
       if(((i + 1) % 7)==0){
         this.weeks.push(week);
         week = [];
       }
     }
 
+  }
+
+  checkIfEntryExistsOnThisDate(date: any){
+    console.log("checkIfEntryExistsOnThisDate");
+    console.log(date);
+    for (let i = 0; i < this.entries.length; i++) {
+
+      if (
+          this.entries[i]?.createdAt?.getFullYear() === this.selected_date.getFullYear() &&
+          this.entries[i]?.createdAt?.getMonth() === this.selected_date.getMonth() &&
+          this.entries[i]?.createdAt?.getDate() === this.selected_date.getDate()
+        ){
+          return true;
+        }
+
+    }
+
+    return false;
   }
 
   setDaysForCalendar(){
@@ -106,6 +129,7 @@ export class CalendarComponent implements OnInit {
 
     this.all_days = [];
     this.weeks = [];
+
     let loop = new Date(this.firstDay);
     while (loop <= this.lastDay) {
       console.log(loop);

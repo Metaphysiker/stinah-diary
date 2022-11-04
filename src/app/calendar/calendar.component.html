@@ -34,10 +34,11 @@
 </thead>
 <tbody>
   <tr *ngFor="let week of weeks">
-    <td *ngFor="let date of week" [ngClass]="{'table-secondary' : date.getUTCMonth() != selected_date.getUTCMonth(), 'table-success' : date.booking_status == 'free', 'table-warning' : date.booking_status == 'partially_booked'}"
+    <td *ngFor="let date of week" [ngClass]="{'table-secondary' : date.date.getUTCMonth() != selected_date.getUTCMonth(), 'table-success' : date.entries_exist == true, 'table-warning' : date.booking_status == 'partially_booked'}"
     (click)="selectDate(date)"
     >
-      {{date.getUTCDate()}}
+      {{date.entries_exist}}
+      {{date.date.getUTCDate()}}
     </td>
   </tr>
 </tbody>
