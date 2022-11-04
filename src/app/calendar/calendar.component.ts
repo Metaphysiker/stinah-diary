@@ -48,6 +48,9 @@ export class CalendarComponent implements OnInit {
     })
     .then((days) => {
       this.fillWeeks();
+    })
+    .then(() => {
+      this.markDaysWithEntries()
     });
 
     //this.setDaysForCalendar();
@@ -92,7 +95,7 @@ export class CalendarComponent implements OnInit {
     this.all_days = [];
     let loop = new Date(this.firstDay);
     while (loop <= this.lastDay) {
-      console.log(loop);
+      //console.log(loop);
       this.all_days.push(loop);
       let newDate = loop.setDate(loop.getDate() + 1);
 
@@ -102,26 +105,48 @@ export class CalendarComponent implements OnInit {
 
   fillWeeks(){
 
+    var self = this;
+
     var week: any = [];
 
-    for (let i = 0; i < this.all_days.length; i++) {
+    return new Promise(function(final_resolve, final_reject){
 
-      this.checkIfEntryExistsOnThisDate(this.all_days[i])
-      .then((boolean) => {
+      for (let i = 0; i < self.all_days.length; i++) {
+
         var calendar_date = {
-          date: this.all_days[i],
-          entries_exist: boolean
+          date: self.all_days[i],
+          entries_exist: false
         }
 
         week.push(calendar_date);
+
         if(((i + 1) % 7)==0){
-          this.weeks.push(week);
+          self.weeks.push(week);
           week = [];
         }
-      })
+
+        if((i+1) < self.all_days.length){
+          final_resolve("");
+        }
+
+      }
+
+    })
+
+
+  }
+
+  markDaysWithEntries(){
+    for (let i = 0; i < this.weeks.length; i++) {
+
+      for (let i2 = 0; i2 < this.weeks[i].length; i2++) {
+        this.checkIfEntryExistsOnThisDate(this.weeks[i][i2].date)
+        .then((boolean: any) => {
+            this.weeks[i][i2].entries_exist = boolean;
+        })
+      }
 
     }
-
   }
 
   checkIfEntryExistsOnThisDate(date: any){
@@ -132,15 +157,20 @@ export class CalendarComponent implements OnInit {
       for (let i = 0; i < self.entries.length; i++) {
 
         if (
-            self.entries[i]?.createdAt?.getUTCFullYear() === date.getUTCFullYear() &&
             self.entries[i]?.createdAt?.getUTCMonth() === date.getUTCMonth() &&
             self.entries[i]?.createdAt?.getUTCDate() === date.getUTCDate()
           ){
+            //console.log("TRUUUUUUUUUUUUUUUUU");
             final_resolve(true);
-          }
+          } else {
+            if((i+1) <= self.entries.length ){
+              //console.log("FAAAAALSE");
 
-          if((i+1) <= self.entries.length ){
-            final_resolve(false);
+              setTimeout(function(){
+                final_resolve(false);
+              }, 5000);
+
+            }
           }
 
       }
