@@ -61,6 +61,40 @@ router.get(
 );
 
 router.get(
+  '/entries/date/:date/:animal_id',
+  async (req, res, next) => {
+
+    //const filter = {};
+    //const entries = await EntryModel.find(filter).sort({'createdAt': -1});
+
+    var date = req.params.date;
+    //console.log("date: " + date);
+    //var iso_date = ISODate(date);
+    //console.log("iso_date: " + iso_date);
+
+    var datex = new Date(date);
+    //console.log(datex);
+
+    const startOfDay = new Date(date);
+    startOfDay.setUTCHours(0, 0, 0, 0);
+    //console.log(startOfDay);
+    const endOfDay = new Date(date);
+    endOfDay.setUTCHours(23, 59, 59, 999);
+    //console.log(endOfDay);
+
+    const entries = await EntryModel.find({
+        animal_id: req.params.animal_id,
+        createdAt: {
+            $gte: startOfDay,
+            $lt: endOfDay
+        }
+    })
+
+    res.json(entries)
+  }
+);
+
+router.get(
   '/entries/calendar/:date',
   async (req, res, next) => {
 
@@ -92,6 +126,49 @@ router.get(
     //console.log(endOfDay);
 
     const entries = await EntryModel.find({
+        createdAt: {
+            $gte: firstDay,
+            $lt: lastDay
+        }
+    })
+
+    res.json(entries)
+  }
+);
+
+router.get(
+  '/entries/calendar/:date/:animal_id',
+  async (req, res, next) => {
+
+    //const filter = {};
+    //const entries = await EntryModel.find(filter).sort({'createdAt': -1});
+
+    var date = new Date(req.params.date);
+    //console.log("date: " + date);
+    //var iso_date = ISODate(date);
+    //console.log("iso_date: " + iso_date);
+
+    //var datex = new Date(date);
+    //console.log(datex);
+
+    //const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    //const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+    //const firstDay = getFirstDayOfWeek(firstDayOfMonth);
+    //const lastDay = getLastDayOfWeek(lastDayOfMonth);
+
+    const firstDay = new Date(Date.UTC(date.getFullYear(), date.getMonth(), 1));
+    const lastDay = new Date(Date.UTC(date.getFullYear(), date.getMonth() + 1, 0));
+
+    //console.log(firstDay);
+    //console.log(lastDay);
+
+    firstDay.setUTCHours(0, 0, 0, 0);
+    lastDay.setUTCHours(23, 59, 59, 999);
+    //console.log(endOfDay);
+
+    const entries = await EntryModel.find({
+        animal_id: req.params.animal_id,
         createdAt: {
             $gte: firstDay,
             $lt: lastDay
