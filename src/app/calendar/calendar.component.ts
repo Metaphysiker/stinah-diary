@@ -68,11 +68,19 @@ export class CalendarComponent implements OnInit {
 
     return new Promise(function(final_resolve, final_reject){
 
-      self.entryService.getEntriesForCalendar(self.selected_month_date.toUTCString())
-      .then((data: any) => {
-        self.entries = data;
-        final_resolve(data);
-      });
+      if(self.animal){
+        self.entryService.getEntriesForCalendarOfAnimal(self.selected_month_date.toUTCString(), self.animal._id)
+        .then((data: any) => {
+          self.entries = data;
+          final_resolve(data);
+        });
+      } else {
+        self.entryService.getEntriesForCalendar(self.selected_month_date.toUTCString())
+        .then((data: any) => {
+          self.entries = data;
+          final_resolve(data);
+        });
+      }
 
     })
 
@@ -84,11 +92,22 @@ export class CalendarComponent implements OnInit {
 
     return new Promise(function(final_resolve, final_reject){
 
-      self.entryService.getEntriesByDate(selected_date.toUTCString())
-      .then((data: any) => {
-        self.entries = data;
-        final_resolve(data);
-      });
+
+      if(self.animal){
+
+        self.entryService.getEntriesByDateOfAnimal(selected_date.toUTCString(), self.animal._id)
+        .then((data: any) => {
+          self.entries = data;
+          final_resolve(data);
+        });
+
+      } else {
+        self.entryService.getEntriesByDate(selected_date.toUTCString())
+        .then((data: any) => {
+          self.entries = data;
+          final_resolve(data);
+        });
+      }
 
     })
 

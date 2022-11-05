@@ -1,4 +1,6 @@
 <ng-template [ngIf]="showAnimal">
+  <div *ngIf="animal">
+
 
 <div class="container">
 
@@ -18,13 +20,19 @@
       </div>
     </div>
   </div>
+    <app-calendar [animal]="animal">
 
+    </app-calendar>
+
+
+  <!--
   <div *ngIf="animal.entries">
     <app-entries [animal]="animal" [show_animal_name]="false"></app-entries>
   </div>
-
+  -->
   <button routerLink="/animals-overview" class="btn btn-primary my-2">Zurück zur Übersicht</button>
 
 
+</div>
 </div>
 </ng-template>

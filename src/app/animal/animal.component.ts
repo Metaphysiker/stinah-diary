@@ -14,10 +14,7 @@ export class AnimalComponent implements OnInit {
   showAnimal: boolean = true;
   //animal$: Observable<any>;
   animal_id: any;
-  animal: Animal = {
-    name: "",
-    _id: 0
-  };
+  animal: Animal | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,13 +35,16 @@ export class AnimalComponent implements OnInit {
   }
 
   deleteAnimal(){
-    if(confirm("Bist du sicher?")) {
-      this.animalService.deleteAnimal(this.animal._id)
-      .then((data: any) => {
-        //console.log(data);
-        this.showAnimal = false;
-      });
+    if(this.animal){
+      if(confirm("Bist du sicher?")) {
+        this.animalService.deleteAnimal(this.animal._id)
+        .then((data: any) => {
+          //console.log(data);
+          this.showAnimal = false;
+        });
+      }
     }
+
   }
 
 }
