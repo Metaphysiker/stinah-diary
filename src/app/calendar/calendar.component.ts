@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Entry } from '../entry';
 import { EntryService } from '../entry.service';
 import { FormControl } from '@angular/forms';
+import { Animal } from '../animal';
+
 
 @Component({
   selector: 'app-calendar',
@@ -9,6 +11,8 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
+
+  @Input() animal: Animal | undefined = undefined;
 
   weeks: any[] = [];
   all_days: Date[] = [];
