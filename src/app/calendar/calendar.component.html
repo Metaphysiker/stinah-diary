@@ -65,11 +65,12 @@
       Ausgewähltes Datum: {{selected_date?.getUTCDate()}}.{{selected_date?.getUTCMonth()}}.{{selected_date?.getUTCFullYear()}}
     </div>
 
+
+
     <div *ngFor="let entry of entries">
       <ng-template [ngIf]="entry._id !== undefined">
           <app-entry [input_entry_id]="entry._id"></app-entry>
       </ng-template>
-
     </div>
 
     <div *ngIf="entries.length === 0">

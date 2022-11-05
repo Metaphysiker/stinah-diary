@@ -20,16 +20,21 @@
       </div>
     </div>
   </div>
+
+  <!--
+    <app-entry-form [animal]="animal" (newEntryEvent)="reload($event)"></app-entry-form>
+
     <app-calendar [animal]="animal">
 
     </app-calendar>
+    -->
 
 
-  <!--
+  
   <div *ngIf="animal.entries">
     <app-entries [animal]="animal" [show_animal_name]="false"></app-entries>
   </div>
-  -->
+
   <button routerLink="/animals-overview" class="btn btn-primary my-2">Zurück zur Übersicht</button>
 
 

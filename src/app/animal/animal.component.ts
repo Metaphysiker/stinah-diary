@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AnimalsService } from '../animals.service';
 import { Animal } from '../animal';
+import { Entry } from '../entry';
 
 @Component({
   selector: 'app-animal',
@@ -32,6 +33,10 @@ export class AnimalComponent implements OnInit {
       this.animal = data;
     });
 
+  }
+
+  reload(entry: Entry){
+    console.log("reload");
   }
 
   deleteAnimal(){
