@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const nodemailer = require("nodemailer");
 const UserModel = require('../model/user');
 const EntryModel = require('../model/entry');
@@ -206,3 +208,4 @@ async function send_daily_update_email(user){
 }
 
 exports.send_daily_update_email = send_daily_update_email;
+exports.send_test_email = send_test_email;
