@@ -10,7 +10,7 @@
 
     </div>
     <div class="col">
-      {{selected_date.toLocaleString("de", { month: "long" })}} {{selected_date.getFullYear()}}
+      {{selected_month_date.toLocaleString("de", { month: "long" })}} {{selected_month_date.getFullYear()}}
     </div>
     <div class="col">
       <button class="btn btn-primary" (click)="getNextMonth()">
@@ -34,7 +34,13 @@
 </thead>
 <tbody>
   <tr *ngFor="let week of weeks">
-    <td *ngFor="let date of week" [ngClass]="{'table-secondary' : date.date.getUTCMonth() != selected_date.getUTCMonth(), 'table-success' : date.entries_exist == true, 'table-warning' : date.booking_status == 'partially_booked'}"
+    <td *ngFor="let date of week" [ngClass]="
+    {
+    'table-warning' : date.selected == true,
+    'table-secondary' : date.date.getUTCMonth() != selected_month_date.getUTCMonth(),
+     'table-info' : (date.date.getUTCMonth() == today_date.getUTCMonth()) && (date.date.getUTCDate() == today_date.getUTCDate()),
+     'table-success' : date.entries_exist == true
+   }"
     (click)="selectDate(date)"
     >
       {{date.date.getUTCDate()}}
@@ -55,6 +61,9 @@
 
     <button (click)="getEntriesByDate()" class="btn btn-primary">Suchen</button>
     -->
+    <div *ngIf="selected_date"class="text-center">
+      Ausgewähltes Datum: {{selected_date?.getUTCDate()}}.{{selected_date?.getUTCMonth()}}.{{selected_date?.getUTCFullYear()}}
+    </div>
 
     <div *ngFor="let entry of entries">
       <ng-template [ngIf]="entry._id !== undefined">
