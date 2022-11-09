@@ -4,6 +4,8 @@ const nodemailer = require("nodemailer");
 const UserModel = require('../model/user');
 const EntryModel = require('../model/entry');
 const ToDoModel = require('../model/to_do');
+const AnimalModel = require('../model/animal');
+
 
 async function send_test_email(user){
 
