@@ -14,6 +14,7 @@ export class FileFormComponent implements OnInit {
 
   fileForm = new FormGroup({
     parent_id: new FormControl(0),
+    parent_class: new FormControl(''),
     file: new FormControl('')
   });
 
