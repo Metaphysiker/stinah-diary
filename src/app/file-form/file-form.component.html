@@ -1,0 +1,44 @@
+
+<ng-template [ngIf]="pleaseWait">
+  <div class="border rounded p-2 my-2">
+    <div class="alert alert-info" role="alert">
+      Bitte warten.
+    </div>
+  </div>
+</ng-template>
+
+<ng-template [ngIf]="!pleaseWait">
+  <div class="border rounded p-2 my-2">
+    <!--
+    <h2>Neuer Eintrag</h2>
+    -->
+    <form [formGroup]="fileForm" enctype="multipart/form-data"  (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <!--
+        <label for="content" class="form-label">Inhalt</label>
+        -->
+        <!--
+        <input type="text" formControlName="content" class="form-control" id="content" aria-describedby="content">
+        -->
+        <textarea class="form-control" formControlName="parent_id" id="parent_id" aria-describedby="content" rows="3"></textarea>
+
+      </div>
+
+      <input
+          formControlName="file"
+          id="file"
+          type="file"
+          class="form-control"
+          (change)="onFileChange($event)">
+
+      <!--
+      <div class="mb-3">
+        <label for="formFileLg" class="form-label">Foto</label>
+        <input formControlName="image" class="form-control form-control-lg" id="image" type="file">
+      </div>
+
+      -->
+      <button type="submit" [disabled]="!fileForm.valid" class="btn btn-primary mt-3">eintragen</button>
+    </form>
+  </div>
+</ng-template>

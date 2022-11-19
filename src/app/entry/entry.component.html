@@ -36,9 +36,15 @@
   </div>
 
 
+
   <div *ngFor="let image of entry.images">
     <ng-template [ngIf]="image">
       <app-image [image_url]="image.name" ></app-image>
     </ng-template>
   </div>
+
+  <app-file-form [parent]="entry"></app-file-form>
+
+
+
 </ng-template>

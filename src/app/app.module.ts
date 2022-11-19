@@ -36,6 +36,7 @@ import { ToDosComponent } from './to-dos/to-dos.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { NavButtonsComponent } from './nav-buttons/nav-buttons.component';
 import { GoBackComponent } from './go-back/go-back.component';
+import { FileFormComponent } from './file-form/file-form.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { GoBackComponent } from './go-back/go-back.component';
     ToDosComponent,
     UserFormComponent,
     NavButtonsComponent,
-    GoBackComponent
+    GoBackComponent,
+    FileFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
