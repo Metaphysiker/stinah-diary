@@ -28,12 +28,20 @@ export class FileFormComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
 
+    console.log(changes);
+    console.log(this.parent);
+
+    console.log("instanceof");
+    console.log(typeof this.parent);
+
     var changes_parent_id = changes?.['parent']?.['currentValue']?.["_id"];
+    var changes_parent_class = changes?.['parent']?.['currentValue']?.["_id"];
     //console.log(changes_parent_id);
     //this is not needed but it helps to debug. Make input field visible to see id
     if(changes_parent_id){
       this.fileForm.patchValue({
-        parent_id: changes_parent_id
+        parent_id: changes_parent_id,
+        parent_class: changes_parent_class
       });
       this.pleaseWait = false;
     }

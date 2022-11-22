@@ -6,7 +6,7 @@ export interface Entry {
     createdAt?: Date;
     animal?: {
       name?: string,
-      _id?: string 
+      _id?: string
     };
     images?: Array<any>;
 }
