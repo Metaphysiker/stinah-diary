@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl  } from '@angular/forms';
 import { File } from '../file';
+import { Entry } from '../entry';
+
 
 
 @Component({
@@ -14,12 +16,12 @@ export class FileFormComponent implements OnInit {
 
   fileForm = new FormGroup({
     parent_id: new FormControl(0),
-    parent_class: new FormControl(''),
+    parent_collection_name: new FormControl(''),
     file: new FormControl('')
   });
 
 
-  @Input() parent: any;
+  @Input() parent: Entry | undefined;
 
   constructor() { }
 
@@ -28,20 +30,18 @@ export class FileFormComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    console.log(changes);
-    console.log(this.parent);
-
-    console.log("instanceof");
-    console.log(typeof this.parent);
 
     var changes_parent_id = changes?.['parent']?.['currentValue']?.["_id"];
-    var changes_parent_class = changes?.['parent']?.['currentValue']?.["_id"];
+    var changes_parent_collection_name = changes?.['parent']?.['currentValue']?.["collection_name"];
+    console.log(changes?.['parent']?.['currentValue']);
+    console.log("changes_parent_collection_name");
+    console.log(changes_parent_collection_name);
     //console.log(changes_parent_id);
     //this is not needed but it helps to debug. Make input field visible to see id
-    if(changes_parent_id){
+    if(changes_parent_id && changes_parent_collection_name){
       this.fileForm.patchValue({
         parent_id: changes_parent_id,
-        parent_class: changes_parent_class
+        parent_collection_name: changes_parent_collection_name
       });
       this.pleaseWait = false;
     }
@@ -67,10 +67,20 @@ export class FileFormComponent implements OnInit {
 
     console.log(this.parent);
 
+    if(this?.parent?._id){
+      this.fileForm.patchValue({
+        parent_id: this.parent._id
+      });
+    }
 
-    this.fileForm.patchValue({
-      parent_id: this.parent._id
-    });
+    if(this?.parent?.collection_name){
+      this.fileForm.patchValue({
+        parent_collection_name: this.parent.collection_name
+      });
+    }
+
+
+
     console.warn(this.fileForm.value);
 
   }

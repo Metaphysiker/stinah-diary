@@ -4,6 +4,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 declare const localforage: any;
+import { Entry } from './entry';
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +31,11 @@ export class EntryService {
         .then((data: any) => {
           data.updatedAt = new Date(data.updatedAt);
           data.createdAt = new Date(data.createdAt);
+          data.collection_name = "entries";
 
           //console.log("entry_data");
           //console.log(data);
-          final_resolve(data);
+          final_resolve(data as Entry);
         });
       })
     })

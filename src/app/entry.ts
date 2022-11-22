@@ -1,4 +1,5 @@
 export interface Entry {
+    collection_name: string;
     content: string;
     _id?: number;
     animal_id?: number;

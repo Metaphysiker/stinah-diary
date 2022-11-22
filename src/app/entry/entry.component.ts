@@ -12,6 +12,7 @@ export class EntryComponent implements OnInit {
   showEntry: boolean = true;
 
   entry: Entry = {
+    collection_name: "entries",
     content: "",
     createdAt: new Date(),
     updatedAt: new Date()
