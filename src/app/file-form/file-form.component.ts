@@ -30,12 +30,9 @@ export class FileFormComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-
     var changes_parent_id = changes?.['parent']?.['currentValue']?.["_id"];
     var changes_parent_collection_name = changes?.['parent']?.['currentValue']?.["collection_name"];
-    console.log(changes?.['parent']?.['currentValue']);
-    console.log("changes_parent_collection_name");
-    console.log(changes_parent_collection_name);
+
     //console.log(changes_parent_id);
     //this is not needed but it helps to debug. Make input field visible to see id
     if(changes_parent_id && changes_parent_collection_name){
@@ -65,8 +62,6 @@ export class FileFormComponent implements OnInit {
 
     this.pleaseWait = true;
 
-    console.log(this.parent);
-
     if(this?.parent?._id){
       this.fileForm.patchValue({
         parent_id: this.parent._id
@@ -78,8 +73,6 @@ export class FileFormComponent implements OnInit {
         parent_collection_name: this.parent.collection_name
       });
     }
-
-
 
     console.warn(this.fileForm.value);
 
