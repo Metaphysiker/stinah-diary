@@ -9,6 +9,12 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const sharp = require('sharp');
 const isImage = require('is-image');
+const AWS = require('aws-sdk');
+
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
+})
 
 
 const storage = multer.memoryStorage();
@@ -242,9 +248,12 @@ router.post(
     let file;
     let collection_name;
 
+    const fileModel = await FileModel.create({});
+
     if(req.body.collection_name == "entries"){
-      const parent = await EntryModel.findOne({_id: req.body.parent_id});
+      const parentModel = await EntryModel.findOne({_id: req.body.parent_id});
     }
+
 
     if(req.files && req.files.file){
 
