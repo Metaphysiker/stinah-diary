@@ -2,7 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output, OnChanges, SimpleChange
 import { FormGroup, FormControl  } from '@angular/forms';
 import { File } from '../file';
 import { Entry } from '../entry';
-
+import { FileService } from '../file.service';
 
 
 @Component({
@@ -23,7 +23,9 @@ export class FileFormComponent implements OnInit {
 
   @Input() parent: Entry | undefined;
 
-  constructor() { }
+  constructor(
+    private fileService: FileService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -75,6 +77,15 @@ export class FileFormComponent implements OnInit {
     }
 
     console.warn(this.fileForm.value);
+
+    this.fileService.createFile(this.fileForm.value).then((response: any) => {
+        //this.router.navigate(['/animals-overview']);
+        //console.log(response);
+        //this.addNewEntry(response);
+        this.pleaseWait = false;
+        this.fileForm.reset();
+
+      });
 
   }
 

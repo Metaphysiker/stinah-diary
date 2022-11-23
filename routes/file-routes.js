@@ -240,35 +240,61 @@ router.post(
     let image;
     let upload_path;
     let file;
+    let collection_name;
 
     if(req.body.collection_name == "entries"){
       const parent = await EntryModel.findOne({_id: req.body.parent_id});
     }
 
+    if(req.files && req.files.file){
 
-    const animal_object_id = new mongoose.Types.ObjectId(req.body.animal_id);
-    const entry = await EntryModel.create({ content: req.body.content, animal_id: req.body.animal_id, animal: animal_object_id });
-    const animal = await AnimalModel.findOneAndUpdate({ _id: req.body.animal_id }, {updatedAt: new Date()});
+      FileModel.create({})
+      .then(function(fileModel){
+        const file = req.files.file
+        const upload_path = path.join(__dirname, '../uploads/' + fileModel._id + "-" + file.name);
 
-    create_file(req, entry)
-      .then(() => {
-        //res.json(entry);
+        image.mv(upload_path, async function(err){
+          if(err){
 
-        EntryModel
-          .findOne({_id: entry._id})
-          .populate('animal')
-          .exec(function (err, entry2) {
-            if (err) return handleError(err);
+          } else {
 
-            res.json(entry2);
-          });
+            compress_image(upload_path)
+            .then((upload_path2) => {
+
+              const filename = path.basename(upload_path2);
+              //console.log(filename);
+
+              var file_filter =  {_id: file._id};
+              var new_file_fields = {
+                          name: filename,
+                          entry_id: parent._id,
+                          entry: parent._id
+                        };
+
+
+              FileModel.findOneAndUpdate(
+                file_filter,
+                new_file_fields,
+                {
+                  new: true
+                }).then((file2) => {
+
+                  final_resolve();
+                });
+
+            })
+
+          }
 
       })
-      .catch(
-        (error) => {
-          res.json(error);
-        }
-      );
+
+    })
+
+    //const animal_object_id = new mongoose.Types.ObjectId(req.body.animal_id);
+    //const entry = await EntryModel.create({ content: req.body.content, animal_id: req.body.animal_id, animal: animal_object_id });
+    //const animal = await AnimalModel.findOneAndUpdate({ _id: req.body.animal_id }, {updatedAt: new Date()});
+
+
 
   }
 );
