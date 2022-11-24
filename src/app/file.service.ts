@@ -58,4 +58,36 @@ export class FileService {
     })
   }
 
+  getSignedUrl(key: any){
+
+    let body = new URLSearchParams();
+    body.set("key", key);
+    //for (const key in data) {
+    //  body.set(key, data[key]);
+      //console.log(`${key} -> ${data[key]}`)
+    //}
+
+    return new Promise(function(final_resolve, final_reject){
+
+      localforage.getItem("jwt-token")
+      .then((jwt_token: any) => {
+
+        fetch('/secure/files/get_signed_url', {
+          method: "POST",
+          headers: {
+            'Authorization': 'JWT ' +jwt_token,
+          //  'Content-Type': 'multipart/form-data'
+          },
+          body: body,
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            final_resolve(data);
+        });
+      })
+
+    })
+
+  }
+
 }

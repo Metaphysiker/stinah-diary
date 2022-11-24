@@ -37,6 +37,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { NavButtonsComponent } from './nav-buttons/nav-buttons.component';
 import { GoBackComponent } from './go-back/go-back.component';
 import { FileFormComponent } from './file-form/file-form.component';
+import { AwsImageComponent } from './aws-image/aws-image.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { FileFormComponent } from './file-form/file-form.component';
     UserFormComponent,
     NavButtonsComponent,
     GoBackComponent,
-    FileFormComponent
+    FileFormComponent,
+    AwsImageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

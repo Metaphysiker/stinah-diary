@@ -57,7 +57,12 @@ const retrieveFile = async (key) => {
       ContentType: ''}
   );
   const url = await getSignedUrl(client, command, { expiresIn: 3600 });
-  return url;
+
+  return new Promise(function(final_resolve, final_reject){
+
+    final_resolve(url);
+  })
+
 }
 
 module.exports = {

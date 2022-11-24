@@ -22,6 +22,19 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 router.post(
+  '/files/get_signed_url',
+  async (req, res, next) => {
+    console.log(req.body);
+
+    s3.retrieveFile(req.body.key)
+    .then((new_url)=>{
+      res.json(new_url);
+    })
+
+  }
+)
+
+router.post(
   '/files',
   async (req, res, next) => {
 
