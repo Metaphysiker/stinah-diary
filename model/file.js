@@ -8,6 +8,14 @@ const FileSchema = new Schema({
     type: String,
     required: false
   },
+  key: {
+    type: String,
+    required: false
+  },
+  url: {
+    type: String,
+    required: false
+  },
   entry_id: {
     type: String,
     required: false

@@ -14,16 +14,8 @@ const AWS = require('aws-sdk');
 AWS.config.update({
   region: "eu-central-1",
 });
-//const s3 = new S3Client();
 
-//const upload = require("../services/FileUpload");
-//const singleUpload = upload.single("files");
-
-var s3 = new AWS.S3({apiVersion: '2006-03-01'});
-//const s3 = new AWS.S3({
-//  accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
-//  secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
-//})
+const s3 = require('../services/s3');
 
 
 const storage = multer.memoryStorage();
@@ -33,46 +25,34 @@ router.post(
   '/files',
   async (req, res, next) => {
 
-    if(req.files && req.files.file){
-      console.log("file is here");
-      console.log(req.files);
-    } else {
-      console.log("no file");
-    }
-
-    var file = req.files.file
-
-
-  const upload_path = path.join(__dirname, '../uploads/' + "-" + file.name);
+  var file = req.files.file
+  var key_name = Date.now().toString() + "-" + file.name
+  const upload_path = path.join(__dirname, '../uploads/' + Date.now().toString() + "-" + file.name);
 
   file.mv(upload_path, async function(err){
     if(err){
-      console.log("file mv error");
+      //console.log("file mv error");
     } else {
-      console.log("file mv no error");
+      //console.log("file mv no error");
 
-      var uploadParams = {Bucket: "stinah-diary", Key: '', Body: ''};
+      s3.uploadFile(upload_path)
+      .then((url)=>{
 
-      var fileStream = fs.createReadStream(upload_path);
-      fileStream.on('error', function(err) {
-        console.log('File Error', err);
-      });
-      uploadParams.Body = fileStream;
-      uploadParams.Key = path.basename(file.name);
+        FileModel.create({
+          name: file.name,
+          url: url,
+          entry_id: req.body.parent_id,
+          entry: req.body.parent_id,
+          key: key_name
+        }).then((file_model)=>{
+          res.json(file_model);
+        });
 
-      s3.upload (uploadParams, function (err, data) {
-        if (err) {
-          console.log("Error", err);
-        } if (data) {
-          console.log("Upload Success", data.Location);
-        }
+
       });
 
     }
   })
-
-
-
 
   }
 );

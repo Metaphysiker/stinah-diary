@@ -9,6 +9,8 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const sharp = require('sharp');
 const isImage = require('is-image');
+const s3 = require('../services/s3');
+
 
 
 const storage = multer.memoryStorage();
@@ -217,6 +219,8 @@ router.get(
     const filter = {_id: req.params.id};
     const entry = await EntryModel.findOne(filter);
     const images = await FileModel.find({entry: entry._id}).sort({'updatedAt': -1});
+
+    
     //const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
 
     EntryModel.

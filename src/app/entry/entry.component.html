@@ -39,6 +39,11 @@
 
   <div *ngFor="let image of entry.images">
     <ng-template [ngIf]="image">
+
+      <div *ngIf="image.key">
+        {{image.key}} - {{image.url}}
+        <img src="{{image.key}}">
+      </div>
       <app-image [image_url]="image.name" ></app-image>
     </ng-template>
   </div>
