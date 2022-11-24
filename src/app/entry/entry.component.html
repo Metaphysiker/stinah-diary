@@ -41,10 +41,9 @@
     <ng-template [ngIf]="image">
 
       <div *ngIf="image.key">
-        <img src="{{image.key}}">
+        <app-aws-image [file]="image" ></app-aws-image>
       </div>
 
-      <app-aws-image [file]="image" ></app-aws-image>
 
       <!--
       <app-image [image_url]="image.name" ></app-image>
