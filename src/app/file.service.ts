@@ -36,8 +36,8 @@ export class FileService {
       //formData.append("file", new Blob(data.image), "mein-bild.jpg");
 
 
-      //console.log("here is body: ");
-      //console.log(body);
+      console.log("here is body: ");
+      console.log(body);
 
       localforage.getItem("jwt-token")
       .then((jwt_token: any) => {

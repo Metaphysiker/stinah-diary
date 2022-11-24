@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require("multer");
+const multerS3 = require('multer-s3');
 const router = express.Router();
 const EntryModel = require('../model/entry');
 const FileModel = require('../model/file');
@@ -10,338 +11,72 @@ const mongoose = require('mongoose');
 const sharp = require('sharp');
 const isImage = require('is-image');
 const AWS = require('aws-sdk');
+AWS.config.update({
+  region: "eu-central-1",
+});
+//const s3 = new S3Client();
 
-const s3 = new AWS.S3({
-  accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
-})
+//const upload = require("../services/FileUpload");
+//const singleUpload = upload.single("files");
+
+var s3 = new AWS.S3({apiVersion: '2006-03-01'});
+//const s3 = new AWS.S3({
+//  accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID,
+//  secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
+//})
 
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-
-
-router.get(
-  '/files',
-  async (req, res, next) => {
-
-    const filter = {};
-    const entries = await EntryModel.find(filter).sort({'updatedAt': -1});
-
-    res.json(entries)
-  }
-);
-
-router.get(
-  '/entries/date/:date',
-  async (req, res, next) => {
-
-    //const filter = {};
-    //const entries = await EntryModel.find(filter).sort({'createdAt': -1});
-
-    var date = req.params.date;
-    //console.log("date: " + date);
-    //var iso_date = ISODate(date);
-    //console.log("iso_date: " + iso_date);
-
-    var datex = new Date(date);
-    //console.log(datex);
-
-    const startOfDay = new Date(date);
-    startOfDay.setUTCHours(0, 0, 0, 0);
-    //console.log(startOfDay);
-    const endOfDay = new Date(date);
-    endOfDay.setUTCHours(23, 59, 59, 999);
-    //console.log(endOfDay);
-
-    const entries = await EntryModel.find({
-        createdAt: {
-            $gte: startOfDay,
-            $lt: endOfDay
-        }
-    })
-
-    res.json(entries)
-  }
-);
-
-router.get(
-  '/entries/date/:date/:animal_id',
-  async (req, res, next) => {
-
-    //const filter = {};
-    //const entries = await EntryModel.find(filter).sort({'createdAt': -1});
-
-    var date = req.params.date;
-    //console.log("date: " + date);
-    //var iso_date = ISODate(date);
-    //console.log("iso_date: " + iso_date);
-
-    var datex = new Date(date);
-    //console.log(datex);
-
-    const startOfDay = new Date(date);
-    startOfDay.setUTCHours(0, 0, 0, 0);
-    //console.log(startOfDay);
-    const endOfDay = new Date(date);
-    endOfDay.setUTCHours(23, 59, 59, 999);
-    //console.log(endOfDay);
-
-    const entries = await EntryModel.find({
-        animal_id: req.params.animal_id,
-        createdAt: {
-            $gte: startOfDay,
-            $lt: endOfDay
-        }
-    })
-
-    res.json(entries)
-  }
-);
-
-router.get(
-  '/entries/calendar/:date',
-  async (req, res, next) => {
-
-    //const filter = {};
-    //const entries = await EntryModel.find(filter).sort({'createdAt': -1});
-
-    var date = new Date(req.params.date);
-    //console.log("date: " + date);
-    //var iso_date = ISODate(date);
-    //console.log("iso_date: " + iso_date);
-
-    //var datex = new Date(date);
-    //console.log(datex);
-
-    //const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-    //const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
-    //const firstDay = getFirstDayOfWeek(firstDayOfMonth);
-    //const lastDay = getLastDayOfWeek(lastDayOfMonth);
-
-    const firstDay = new Date(Date.UTC(date.getFullYear(), date.getMonth(), 1));
-    const lastDay = new Date(Date.UTC(date.getFullYear(), date.getMonth() + 1, 0));
-
-    //console.log(firstDay);
-    //console.log(lastDay);
-
-    firstDay.setUTCHours(0, 0, 0, 0);
-    lastDay.setUTCHours(23, 59, 59, 999);
-    //console.log(endOfDay);
-
-    const entries = await EntryModel.find({
-        createdAt: {
-            $gte: firstDay,
-            $lt: lastDay
-        }
-    })
-
-    res.json(entries)
-  }
-);
-
-router.get(
-  '/entries/calendar/:date/:animal_id',
-  async (req, res, next) => {
-
-    //const filter = {};
-    //const entries = await EntryModel.find(filter).sort({'createdAt': -1});
-
-    var date = new Date(req.params.date);
-    //console.log("date: " + date);
-    //var iso_date = ISODate(date);
-    //console.log("iso_date: " + iso_date);
-
-    //var datex = new Date(date);
-    //console.log(datex);
-
-    //const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
-    //const lastDayOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
-    //const firstDay = getFirstDayOfWeek(firstDayOfMonth);
-    //const lastDay = getLastDayOfWeek(lastDayOfMonth);
-
-    const firstDay = new Date(Date.UTC(date.getFullYear(), date.getMonth(), 1));
-    const lastDay = new Date(Date.UTC(date.getFullYear(), date.getMonth() + 1, 0));
-
-    //console.log(firstDay);
-    //console.log(lastDay);
-
-    firstDay.setUTCHours(0, 0, 0, 0);
-    lastDay.setUTCHours(23, 59, 59, 999);
-    //console.log(endOfDay);
-
-    const entries = await EntryModel.find({
-        animal_id: req.params.animal_id,
-        createdAt: {
-            $gte: firstDay,
-            $lt: lastDay
-        }
-    })
-
-    res.json(entries)
-  }
-);
-
-router.get(
-  '/entries/search/',
-  async (req, res, next) => {
-
-    const filter = {};
-    const entries = await EntryModel.find(filter).sort({'updatedAt': -1});
-
-    res.json(entries)
-  }
-);
-
-router.get(
-  '/entries/search/:search_string',
-  async (req, res, next) => {
-
-    const entries = await EntryModel.find({$text: {$search: req.params.search_string}}).sort({'updatedAt': -1});
-
-    res.json(entries)
-  }
-);
-
-router.get(
-  '/entries/animal/:animal_id',
-  async (req, res, next) => {
-
-    const filter = {animal_id: req.params.animal_id};
-    const entries = await EntryModel.find(filter).sort({'updatedAt': -1});
-
-    res.json(entries)
-  }
-);
-
-router.get(
-  '/entries/:id',
-  async (req, res, next) => {
-    const filter = {_id: req.params.id};
-    const entry = await EntryModel.findOne(filter);
-    const images = await FileModel.find({entry: entry._id}).sort({'updatedAt': -1});
-    //const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
-
-    EntryModel.
-      findOne(filter).
-      populate('animal').
-      exec(function (err, entry) {
-        if (err) return handleError(err);
-
-        const final_response = Object.assign({}, entry.toObject(), {images: images.map((r) => r.toObject())});
-
-        res.json(final_response);
-      });
-
-    //res.json(final_response)
-  }
-);
-
 router.post(
   '/files',
   async (req, res, next) => {
-    let image;
-    let upload_path;
-    let file;
-    let collection_name;
-
-    const fileModel = await FileModel.create({});
-
-    if(req.body.collection_name == "entries"){
-      const parentModel = await EntryModel.findOne({_id: req.body.parent_id});
-    }
-
 
     if(req.files && req.files.file){
+      console.log("file is here");
+      console.log(req.files);
+    } else {
+      console.log("no file");
+    }
 
-      FileModel.create({})
-      .then(function(fileModel){
-        const file = req.files.file
-        const upload_path = path.join(__dirname, '../uploads/' + fileModel._id + "-" + file.name);
-
-        image.mv(upload_path, async function(err){
-          if(err){
-
-          } else {
-
-            compress_image(upload_path)
-            .then((upload_path2) => {
-
-              const filename = path.basename(upload_path2);
-              //console.log(filename);
-
-              var file_filter =  {_id: file._id};
-              var new_file_fields = {
-                          name: filename,
-                          entry_id: parent._id,
-                          entry: parent._id
-                        };
+    var file = req.files.file
 
 
-              FileModel.findOneAndUpdate(
-                file_filter,
-                new_file_fields,
-                {
-                  new: true
-                }).then((file2) => {
+  const upload_path = path.join(__dirname, '../uploads/' + "-" + file.name);
 
-                  final_resolve();
-                });
+  file.mv(upload_path, async function(err){
+    if(err){
+      console.log("file mv error");
+    } else {
+      console.log("file mv no error");
 
-            })
+      var uploadParams = {Bucket: "stinah-diary", Key: '', Body: ''};
 
-          }
+      var fileStream = fs.createReadStream(upload_path);
+      fileStream.on('error', function(err) {
+        console.log('File Error', err);
+      });
+      uploadParams.Body = fileStream;
+      uploadParams.Key = path.basename(file.name);
 
-      })
+      s3.upload (uploadParams, function (err, data) {
+        if (err) {
+          console.log("Error", err);
+        } if (data) {
+          console.log("Upload Success", data.Location);
+        }
+      });
 
-    })
+    }
+  })
 
-    //const animal_object_id = new mongoose.Types.ObjectId(req.body.animal_id);
-    //const entry = await EntryModel.create({ content: req.body.content, animal_id: req.body.animal_id, animal: animal_object_id });
-    //const animal = await AnimalModel.findOneAndUpdate({ _id: req.body.animal_id }, {updatedAt: new Date()});
 
 
 
   }
 );
 
-router.delete('/entries/:id',
-  async (req, res, next) => {
-    const filter = {_id: req.params.id};
-    const file_filter = {entry_id: req.params.id};
-
-    EntryModel.deleteOne(filter, function (err) {
-      if (err) return handleError(err);
-    });
-
-    FileModel.findOne(file_filter).then(function (file, err) {
-      //console.log("file: " + file);
-      if (file) {
-        file_path = path.join(__dirname, '../uploads/' + file.name);
-        if (fs.existsSync(file_path)) {
-          fs.unlink(file_path, (err_file_path) => {
-            if (err_file_path) {
-                throw err_file_path;
-            }
-            //console.log("Delete File successfully.");
-            FileModel.deleteOne(file_filter, function (err_delete_file_model){
-              if (err_delete_file_model) return handleError(err_delete_file_model);
-
-            });
-        });
-        }
-
-      }
-
-    })
-
-
-    res.json("entry_deleted")
-  }
-)
 
 module.exports = router;
 
