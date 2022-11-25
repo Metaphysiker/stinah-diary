@@ -30,11 +30,7 @@ export class AwsImageComponent implements OnInit {
 
     if(changes_key){
       this.fileService.getSignedUrl(changes_key).then((response: any) => {
-          //this.router.navigate(['/animals-overview']);
-          //console.log(response);
-          //this.addNewEntry(response);
-          console.log("response");
-          console.log(response);
+
           this.final_image_url = response;
         });
     }
